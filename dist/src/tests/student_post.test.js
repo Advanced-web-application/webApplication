@@ -16,10 +16,14 @@ const supertest_1 = __importDefault(require("supertest"));
 const app_1 = __importDefault(require("../app"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const student_post_model_1 = __importDefault(require("../models/student_post_model"));
-const user_model_1 = __importDefault(require("../models/user_model"));
+const users_model_1 = __importDefault(require("../models/users_model"));
 let app;
 const user = {
-    email: "test@student.post.test",
+    fullName: "John Doe",
+    age: 22,
+    gender: "male",
+    _id: "1234567890",
+    email: "test@User.post.test",
     password: "1234567890",
 };
 let accessToken = "";
@@ -27,7 +31,7 @@ beforeAll(() => __awaiter(void 0, void 0, void 0, function* () {
     app = yield (0, app_1.default)();
     console.log("beforeAll");
     yield student_post_model_1.default.deleteMany();
-    yield user_model_1.default.deleteMany({ 'email': user.email });
+    yield users_model_1.default.deleteMany({ 'email': user.email });
     const response = yield (0, supertest_1.default)(app).post("/auth/register").send(user);
     user._id = response.body._id;
     const response2 = yield (0, supertest_1.default)(app).post("/auth/login").send(user);
