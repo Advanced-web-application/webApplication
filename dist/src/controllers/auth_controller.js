@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const users_model_1 = __importDefault(require("../models/users_model"));
+const Customer_model_1 = __importDefault(require("../models/Customer_model"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -22,13 +22,13 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         return res.status(400).send("missing email or password");
     }
     try {
-        const rs = yield users_model_1.default.findOne({ 'email': email });
+        const rs = yield Customer_model_1.default.findOne({ 'email': email });
         if (rs != null) {
             return res.status(406).send("email already exists");
         }
         const salt = yield bcrypt_1.default.genSalt(10);
         const encryptedPassword = yield bcrypt_1.default.hash(password, salt);
-        const rs2 = yield users_model_1.default.create({ 'email': email, 'password': encryptedPassword });
+        const rs2 = yield Customer_model_1.default.create({ 'email': email, 'password': encryptedPassword });
         return res.status(201).send(rs2);
     }
     catch (err) {
@@ -42,7 +42,7 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         return res.status(400).send("missing email or password");
     }
     try {
-        const user = yield users_model_1.default.findOne({ 'email': email });
+        const user = yield Customer_model_1.default.findOne({ 'email': email });
         if (user == null) {
             return res.status(401).send("email or password incorrect");
         }
@@ -78,7 +78,7 @@ const logout = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         if (err)
             return res.sendStatus(401);
         try {
-            const userDb = yield users_model_1.default.findOne({ '_id': user._id });
+            const userDb = yield Customer_model_1.default.findOne({ '_id': user._id });
             if (!userDb.refreshTokens || !userDb.refreshTokens.includes(refreshToken)) {
                 userDb.refreshTokens = [];
                 yield userDb.save();
@@ -106,7 +106,7 @@ const refresh = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             return res.sendStatus(401);
         }
         try {
-            const userDb = yield users_model_1.default.findOne({ '_id': user._id });
+            const userDb = yield Customer_model_1.default.findOne({ '_id': user._id });
             if (!userDb.refreshTokens || !userDb.refreshTokens.includes(refreshToken)) {
                 userDb.refreshTokens = [];
                 yield userDb.save();

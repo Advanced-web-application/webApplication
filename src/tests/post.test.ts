@@ -3,15 +3,11 @@ import request from "supertest";
 import initApp from "../app";
 import mongoose from "mongoose";
 import Post, { IPost } from "../models/post_model";
-import User, { IUser } from "../models/users_model";
+import User, { IUser } from "../models/user_model";
 
 let app: Express;
 const user: IUser = {
-  fullName: "John Doe",
-  age: 22,
-  gender: "male",
-  _id: "1234567890",
-  email: "test@User.post.test",
+  email: "test@post.test",
   password: "1234567890",
 }
 let accessToken = "";
@@ -66,6 +62,7 @@ describe("Post tests", () => {
     const response = await request(app).get("/post");
     expect(response.statusCode).toBe(200);
     const rc = response.body[0];
+    console.log("name: " + rc.name);
     expect(rc.name).toBe(post1.name);
     expect(rc.description).toBe(post1.description);
     expect(response.body.price).toBe(post1.price.toString());
