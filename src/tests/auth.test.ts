@@ -118,4 +118,37 @@ describe("Auth tests", () => {
       .send();
     expect(response1.statusCode).not.toBe(200);
   });
+
+  test("Test Login", async () => {
+    const response = await request(app)
+      .post("/auth/login").send(user);
+    expect(response.statusCode).toBe(200);
+    accessToken = response.body.accessToken;
+    refreshToken = response.body.refreshToken;
+    expect(accessToken).toBeDefined();
+  });
+
+  const newAccessToken2= accessToken;
+  const newRefreshToken2= refreshToken;
+
+  test("Test logout", async () => {
+    const response = await request(app)
+      .get("/auth/logout")
+      .set("Authorization", "JWT " + newRefreshToken2)
+      .send();
+    expect(response.statusCode).toBe(200);
+
+    const response2 = await request(app)
+      .get("/customer")
+      .set("Authorization", "JWT " + newAccessToken2);
+    expect(response2.statusCode).not.toBe(200);
+  });
+
+  test("Test logout for the second time", async () => {
+    const response = await request(app)
+      .get("/auth/logout")
+      .set("Authorization", "JWT " + newRefreshToken2)
+      .send();
+    expect(response.statusCode).not.toBe(200);
+  });
 });
