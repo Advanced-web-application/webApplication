@@ -62,15 +62,32 @@ describe("Post tests", () => {
     test("Test Post post", () => __awaiter(void 0, void 0, void 0, function* () {
         addPost(post1);
     }));
+    let postId;
     test("Test Get All posts with one post in DB", () => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield (0, supertest_1.default)(app).get("/post");
         expect(response.statusCode).toBe(200);
         const rc = response.body[0];
-        console.log("name: " + rc.name);
+        postId = rc._id;
+        console.log("postId: " + postId);
         expect(rc.name).toBe(post1.name);
         expect(rc.description).toBe(post1.description);
         expect(rc.price.toString()).toBe(post1.price.toString());
         expect(rc.owner).toBe(user._id);
+    }));
+    test("Test PUT /post/:id", () => __awaiter(void 0, void 0, void 0, function* () {
+        const updatedPost = Object.assign(Object.assign({}, post1), { name: "changed name" });
+        const response = yield (0, supertest_1.default)(app)
+            .put("/post/" + postId)
+            .set("Authorization", "JWT " + accessToken)
+            .send(updatedPost);
+        expect(response.statusCode).toBe(200);
+        expect(response.body.name).toBe(updatedPost.name);
+    }));
+    test("Test DELETE /post/:id", () => __awaiter(void 0, void 0, void 0, function* () {
+        const response = yield (0, supertest_1.default)(app)
+            .delete(`/post/${postId}`)
+            .set("Authorization", "JWT " + accessToken);
+        expect(response.statusCode).toBe(200);
     }));
 });
 //# sourceMappingURL=post.test.js.map

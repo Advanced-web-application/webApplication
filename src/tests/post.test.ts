@@ -58,15 +58,35 @@ describe("Post tests", () => {
     addPost(post1);
   });
 
+  let postId: string;
+
   test("Test Get All posts with one post in DB", async () => {
     const response = await request(app).get("/post");
     expect(response.statusCode).toBe(200);
     const rc = response.body[0];
-    console.log("name: " + rc.name);
+    postId = rc._id;
+    console.log("postId: " + postId);
     expect(rc.name).toBe(post1.name);
     expect(rc.description).toBe(post1.description);
     expect(rc.price.toString()).toBe(post1.price.toString());
     expect(rc.owner).toBe(user._id);
+  });
+
+  test("Test PUT /post/:id", async () => {
+    const updatedPost = { ...post1, name: "changed name" };
+    const response = await request(app)
+      .put("/post/" + postId)
+      .set("Authorization", "JWT " + accessToken)
+      .send(updatedPost);
+    expect(response.statusCode).toBe(200);
+    expect(response.body.name).toBe(updatedPost.name);
+  });
+
+  test("Test DELETE /post/:id", async () => {
+    const response = await request(app)
+    .delete(`/post/${postId}`)
+    .set("Authorization", "JWT " + accessToken);
+    expect(response.statusCode).toBe(200);
   });
 
 });
