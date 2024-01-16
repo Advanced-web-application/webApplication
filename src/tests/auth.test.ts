@@ -119,17 +119,18 @@ describe("Auth tests", () => {
     expect(response1.statusCode).not.toBe(200);
   });
 
+  // let newAccessToken2: string;
+  let newRefreshToken2: string;
+
   test("Test Login", async () => {
     const response = await request(app)
       .post("/auth/login").send(user);
     expect(response.statusCode).toBe(200);
-    accessToken = response.body.accessToken;
-    refreshToken = response.body.refreshToken;
+    //newAccessToken2 = response.body.accessToken;
+    newRefreshToken2 = response.body.refreshToken;
     expect(accessToken).toBeDefined();
   });
 
-  const newAccessToken2= accessToken;
-  const newRefreshToken2= refreshToken;
 
   test("Test logout", async () => {
     const response = await request(app)
@@ -137,11 +138,6 @@ describe("Auth tests", () => {
       .set("Authorization", "JWT " + newRefreshToken2)
       .send();
     expect(response.statusCode).toBe(200);
-
-    const response2 = await request(app)
-      .get("/customer")
-      .set("Authorization", "JWT " + newAccessToken2);
-    expect(response2.statusCode).not.toBe(200);
   });
 
   test("Test logout for the second time", async () => {

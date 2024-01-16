@@ -67,6 +67,16 @@ describe("Customer tests", () => {
     expect(cust.gender).toBe(customer.gender);
     expect(cust._id).toBe(customer._id);
   });
+  
+  test("Test Get Customer by id", async () => {
+    const response = await request(app).get("/customer/" + customer._id).set("Authorization", "JWT " + accessToken);
+    expect(response.statusCode).toBe(200);
+    const cust = response.body;
+    expect(cust.fullName).toBe(customer.fullName);
+    expect(cust.age).toBe(customer.age);
+    expect(cust.gender).toBe(customer.gender);
+    expect(cust._id).toBe(customer._id);
+  });
 
   test("Test Post duplicate Customer", async () => {
     const response = await request(app).post("/customer").set("Authorization", "JWT " + accessToken).send(customer);
