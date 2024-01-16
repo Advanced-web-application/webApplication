@@ -16,14 +16,10 @@ const supertest_1 = __importDefault(require("supertest"));
 const app_1 = __importDefault(require("../app"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const post_model_1 = __importDefault(require("../models/post_model"));
-const users_model_1 = __importDefault(require("../models/users_model"));
+const user_model_1 = __importDefault(require("../models/user_model"));
 let app;
 const user = {
-    fullName: "John Doe",
-    age: 22,
-    gender: "male",
-    _id: "1234567890",
-    email: "test@User.post.test",
+    email: "test@post.test",
     password: "1234567890",
 };
 let accessToken = "";
@@ -31,7 +27,7 @@ beforeAll(() => __awaiter(void 0, void 0, void 0, function* () {
     app = yield (0, app_1.default)();
     console.log("beforeAll");
     yield post_model_1.default.deleteMany();
-    yield users_model_1.default.deleteMany({ 'email': user.email });
+    yield user_model_1.default.deleteMany({ 'email': user.email });
     const response = yield (0, supertest_1.default)(app).post("/auth/register").send(user);
     user._id = response.body._id;
     const response2 = yield (0, supertest_1.default)(app).post("/auth/login").send(user);
@@ -55,7 +51,7 @@ describe("Post tests", () => {
         expect(response.statusCode).toBe(201);
         expect(response.body.owner).toBe(user._id);
         expect(response.body.name).toBe(post.name);
-        expect(response.body.price).toBe(post.price.toString());
+        expect(response.body.price.toString()).toBe(post.price.toString());
         expect(response.body.description).toBe(post.description);
     });
     test("Test Get All posts - empty response", () => __awaiter(void 0, void 0, void 0, function* () {
@@ -70,10 +66,11 @@ describe("Post tests", () => {
         const response = yield (0, supertest_1.default)(app).get("/post");
         expect(response.statusCode).toBe(200);
         const rc = response.body[0];
+        console.log("name: " + rc.name);
         expect(rc.name).toBe(post1.name);
         expect(rc.description).toBe(post1.description);
-        expect(response.body.price).toBe(post1.price.toString());
+        expect(rc.price.toString()).toBe(post1.price.toString());
         expect(rc.owner).toBe(user._id);
     }));
 });
-//# sourceMappingURL=student_post.test.js.map
+//# sourceMappingURL=post.test.js.map

@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const supertest_1 = __importDefault(require("supertest"));
 const app_1 = __importDefault(require("../app"));
 const mongoose_1 = __importDefault(require("mongoose"));
-const users_model_1 = __importDefault(require("../models/users_model"));
+const Customer_model_1 = __importDefault(require("../models/Customer_model"));
 let app;
 const user = {
     email: "testUser@test.com",
@@ -24,7 +24,7 @@ const user = {
 beforeAll(() => __awaiter(void 0, void 0, void 0, function* () {
     app = yield (0, app_1.default)();
     console.log("beforeAll");
-    yield users_model_1.default.deleteMany({ 'email': user.email });
+    yield Customer_model_1.default.deleteMany({ 'email': user.email });
 }));
 afterAll(() => __awaiter(void 0, void 0, void 0, function* () {
     yield mongoose_1.default.connection.close();
