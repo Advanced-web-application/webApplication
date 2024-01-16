@@ -44,7 +44,7 @@ describe("Post tests", () => {
     expect(response.statusCode).toBe(201);
     expect(response.body.owner).toBe(user._id);
     expect(response.body.name).toBe(post.name);
-    expect(response.body.price).toBe(post.price.toString());
+    expect(response.body.price.toString()).toBe(post.price.toString());
     expect(response.body.description).toBe(post.description);
   };
 
@@ -65,7 +65,7 @@ describe("Post tests", () => {
     console.log("name: " + rc.name);
     expect(rc.name).toBe(post1.name);
     expect(rc.description).toBe(post1.description);
-    expect(response.body.price).toBe(post1.price.toString());
+    expect(rc.price.toString()).toBe(post1.price.toString());
     expect(rc.owner).toBe(user._id);
   });
 
