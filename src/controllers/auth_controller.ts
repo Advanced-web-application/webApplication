@@ -4,6 +4,10 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 const register = async (req: Request, res: Response) => {
+    const fullName = req.body.fullName;
+    const age = req.body.age;
+    const gender = req.body.gender;
+    const id = req.body._id;
     const email = req.body.email;
     const password = req.body.password;
     if (!email || !password) {
@@ -17,10 +21,10 @@ const register = async (req: Request, res: Response) => {
         const salt = await bcrypt.genSalt(10);
         const encryptedPassword = await bcrypt.hash(password, salt);
         const rs2 = await User.create({
-        'fullName': "John Doe",
-        'age': 22,
-        'gender': "male",
-        '_id':"1234567890",
+        'fullName': fullName,
+        'age':age,
+        'gender':gender,
+        '_id':id,
         'email': email, 
         'password': encryptedPassword });
         return res.status(201).send(rs2);
@@ -47,7 +51,8 @@ const login = async (req: Request, res: Response) => {
 
         const accessToken = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRATION });
         const refreshToken = jwt.sign({ _id: user._id }, process.env.JWT_REFRESH_SECRET);
-        console.log(" log in accessToken" + accessToken);
+        console.log(" log in accessToken: " + accessToken);
+        console.log(" log in refreshToken: " + refreshToken);
         if (user.refreshTokens == null) {
             user.refreshTokens = [refreshToken];
         } else {

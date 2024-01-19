@@ -16,6 +16,10 @@ const user_model_1 = __importDefault(require("../models/user_model"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const fullName = req.body.fullName;
+    const age = req.body.age;
+    const gender = req.body.gender;
+    const id = req.body._id;
     const email = req.body.email;
     const password = req.body.password;
     if (!email || !password) {
@@ -29,10 +33,10 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const salt = yield bcrypt_1.default.genSalt(10);
         const encryptedPassword = yield bcrypt_1.default.hash(password, salt);
         const rs2 = yield user_model_1.default.create({
-            'fullName': "John Doe",
-            'age': 22,
-            'gender': "male",
-            '_id': "1234567890",
+            'fullName': fullName,
+            'age': age,
+            'gender': gender,
+            '_id': id,
             'email': email,
             'password': encryptedPassword
         });
@@ -59,7 +63,8 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
         const accessToken = jsonwebtoken_1.default.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRATION });
         const refreshToken = jsonwebtoken_1.default.sign({ _id: user._id }, process.env.JWT_REFRESH_SECRET);
-        console.log(" log in accessToken" + accessToken);
+        console.log(" log in accessToken: " + accessToken);
+        console.log(" log in refreshToken: " + refreshToken);
         if (user.refreshTokens == null) {
             user.refreshTokens = [refreshToken];
         }
