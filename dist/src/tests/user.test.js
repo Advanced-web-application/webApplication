@@ -19,12 +19,12 @@ const user_model_1 = __importDefault(require("../models/user_model"));
 let app;
 let accessToken;
 const user = {
-    email: "testUser@test.com",
-    password: "1234567890",
     fullName: "John Doe",
     age: 22,
     gender: "male",
     _id: "1234567890",
+    email: "testUser1@test.com",
+    password: "1234567890",
 };
 const newUser = {
     email: "testUsermew@test.com",

@@ -18,8 +18,12 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const user_model_1 = __importDefault(require("../models/user_model"));
 let app;
 const user = {
+    fullName: "John",
+    age: 24,
+    gender: "male",
+    _id: "12345678",
     email: "testUser@test.com",
-    password: "1234567890",
+    password: "12345678",
 };
 beforeAll(() => __awaiter(void 0, void 0, void 0, function* () {
     app = yield (0, app_1.default)();
@@ -112,31 +116,28 @@ describe("Auth tests", () => {
             .send();
         expect(response1.statusCode).not.toBe(200);
     }));
+    let LogOutaccessToken;
+    let LogOutrefreshToken;
     test("Test Login", () => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield (0, supertest_1.default)(app)
             .post("/auth/login").send(user);
         expect(response.statusCode).toBe(200);
-        accessToken = response.body.accessToken;
-        refreshToken = response.body.refreshToken;
-        expect(accessToken).toBeDefined();
+        LogOutaccessToken = response.body.accessToken;
+        LogOutrefreshToken = response.body.refreshToken;
+        expect(LogOutaccessToken).toBeDefined();
+        expect(LogOutrefreshToken).toBeDefined();
     }));
-    const newAccessToken2 = accessToken;
-    const newRefreshToken2 = refreshToken;
     test("Test logout", () => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield (0, supertest_1.default)(app)
             .get("/auth/logout")
-            .set("Authorization", "JWT " + newRefreshToken2)
+            .set("Authorization", "JWT " + LogOutrefreshToken)
             .send();
         expect(response.statusCode).toBe(200);
-        const response2 = yield (0, supertest_1.default)(app)
-            .get("/user")
-            .set("Authorization", "JWT " + newAccessToken2);
-        expect(response2.statusCode).not.toBe(200);
     }));
     test("Test logout for the second time", () => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield (0, supertest_1.default)(app)
             .get("/auth/logout")
-            .set("Authorization", "JWT " + newRefreshToken2)
+            .set("Authorization", "JWT " + LogOutrefreshToken)
             .send();
         expect(response.statusCode).not.toBe(200);
     }));

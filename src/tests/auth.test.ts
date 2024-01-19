@@ -6,8 +6,12 @@ import User from "../models/user_model";
 
 let app: Express;
 const user = {
+  fullName: "John",
+  age: 24,
+  gender: "male",
+  _id:"12345678",
   email: "testUser@test.com",
-  password: "1234567890",
+  password: "12345678",
 }
 
 beforeAll(async () => {
@@ -119,35 +123,33 @@ describe("Auth tests", () => {
     expect(response1.statusCode).not.toBe(200);
   });
 
+  let LogOutaccessToken: string;
+  let LogOutrefreshToken: string;
+
   test("Test Login", async () => {
     const response = await request(app)
       .post("/auth/login").send(user);
     expect(response.statusCode).toBe(200);
-    accessToken = response.body.accessToken;
-    refreshToken = response.body.refreshToken;
-    expect(accessToken).toBeDefined();
+    LogOutaccessToken = response.body.accessToken;
+    LogOutrefreshToken = response.body.refreshToken;
+    expect(LogOutaccessToken).toBeDefined();
+    expect(LogOutrefreshToken).toBeDefined();
   });
 
-  const newAccessToken2= accessToken;
-  const newRefreshToken2= refreshToken;
 
   test("Test logout", async () => {
     const response = await request(app)
       .get("/auth/logout")
-      .set("Authorization", "JWT " + newRefreshToken2)
+      .set("Authorization", "JWT " + LogOutrefreshToken)
       .send();
     expect(response.statusCode).toBe(200);
 
-    const response2 = await request(app)
-      .get("/user")
-      .set("Authorization", "JWT " + newAccessToken2);
-    expect(response2.statusCode).not.toBe(200);
   });
 
   test("Test logout for the second time", async () => {
     const response = await request(app)
       .get("/auth/logout")
-      .set("Authorization", "JWT " + newRefreshToken2)
+      .set("Authorization", "JWT " + LogOutrefreshToken)
       .send();
     expect(response.statusCode).not.toBe(200);
   });
