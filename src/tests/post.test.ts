@@ -86,11 +86,28 @@ describe("Post tests", () => {
     expect(response.body.name).toBe(updatedPost.name);
   });
 
+  test("Test PUT with wrong id /post/:id", async () => {
+    const updatedPost = { ...post1, name: "changed name" };
+    const response = await request(app)
+      .put("/post/" + "123")
+      .set("Authorization", "JWT " + accessToken)
+      .send(updatedPost);
+    expect(response.statusCode).toBe(406);
+  });
+
+  test("Test DELETE with wrong id /post/:id", async () => {
+    const response = await request(app)
+    .delete(`/post/"123"`)
+    .set("Authorization", "JWT " + accessToken);
+    expect(response.statusCode).toBe(406);
+  });
+
   test("Test DELETE /post/:id", async () => {
     const response = await request(app)
     .delete(`/post/${postId}`)
     .set("Authorization", "JWT " + accessToken);
     expect(response.statusCode).toBe(200);
   });
+
 
 });

@@ -64,6 +64,26 @@ describe("Auth tests", () => {
         refreshToken = response.body.refreshToken;
         expect(accessToken).toBeDefined();
     }));
+    test("Test Login without password", () => __awaiter(void 0, void 0, void 0, function* () {
+        const response = yield (0, supertest_1.default)(app)
+            .post("/auth/login").send({
+            email: "test@test.com",
+        });
+        expect(response.statusCode).toBe(400);
+    }));
+    test("Test Login with wrong password", () => __awaiter(void 0, void 0, void 0, function* () {
+        const response = yield (0, supertest_1.default)(app)
+            .post("/auth/login").send({
+            email: "test@test.com",
+            password: "123456789"
+        });
+        expect(response.statusCode).toBe(401);
+    }));
+    test("Test Login without username and password", () => __awaiter(void 0, void 0, void 0, function* () {
+        const response = yield (0, supertest_1.default)(app)
+            .post("/auth/login").send({});
+        expect(response.statusCode).toBe(400);
+    }));
     test("Test forbidden access without token", () => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield (0, supertest_1.default)(app).get("/user");
         expect(response.statusCode).toBe(401);

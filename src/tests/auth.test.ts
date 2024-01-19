@@ -60,6 +60,30 @@ describe("Auth tests", () => {
     expect(accessToken).toBeDefined();
   });
 
+  test("Test Login without password", async () => {
+    const response = await request(app)
+      .post("/auth/login").send({
+        email: "test@test.com",});
+    expect(response.statusCode).toBe(400);
+
+  });
+
+  test("Test Login with wrong password", async () => {
+    const response = await request(app)
+      .post("/auth/login").send({
+        email: "test@test.com",
+      password: "123456789"});
+    expect(response.statusCode).toBe(401);
+
+  });
+
+  test("Test Login without username and password", async () => {
+    const response = await request(app)
+      .post("/auth/login").send({});
+    expect(response.statusCode).toBe(400);
+
+  });
+
   test("Test forbidden access without token", async () => {
     const response = await request(app).get("/user");
     expect(response.statusCode).toBe(401);
