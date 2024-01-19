@@ -19,6 +19,10 @@ const post_model_1 = __importDefault(require("../models/post_model"));
 const user_model_1 = __importDefault(require("../models/user_model"));
 let app;
 const user = {
+    fullName: "John Doe",
+    age: 22,
+    gender: "male",
+    _id: "1234567890",
     email: "test@post.test",
     password: "1234567890",
 };

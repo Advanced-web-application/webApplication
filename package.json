@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "tsc && jest --detectOpenHandles --forceExit",
-    "testCustomer": "tsc && jest --detectOpenHandles --forceExit ./src/tests/customer.test.ts",
+    "testUser": "tsc && jest --detectOpenHandles --forceExit ./src/tests/user.test.ts",
     "testAuth": "tsc && jest --detectOpenHandles --forceExit ./src/tests/auth.test.ts",
     "testPost": "tsc && jest --detectOpenHandles --forceExit --runInBand ./src/tests/post.test.ts",
     "start": "tsc && node ./dist/src/server.js",
