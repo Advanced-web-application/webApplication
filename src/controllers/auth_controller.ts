@@ -16,7 +16,13 @@ const register = async (req: Request, res: Response) => {
         }
         const salt = await bcrypt.genSalt(10);
         const encryptedPassword = await bcrypt.hash(password, salt);
-        const rs2 = await User.create({ 'email': email, 'password': encryptedPassword });
+        const rs2 = await User.create({
+        'fullName': "John Doe",
+        'age': 22,
+        'gender': "male",
+        '_id':"1234567890",
+        'email': email, 
+        'password': encryptedPassword });
         return res.status(201).send(rs2);
     } catch (err) {
         return res.status(400).send("error missing email or password");
@@ -41,6 +47,7 @@ const login = async (req: Request, res: Response) => {
 
         const accessToken = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRATION });
         const refreshToken = jwt.sign({ _id: user._id }, process.env.JWT_REFRESH_SECRET);
+        console.log(" log in accessToken" + accessToken);
         if (user.refreshTokens == null) {
             user.refreshTokens = [refreshToken];
         } else {

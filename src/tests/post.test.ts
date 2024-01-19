@@ -7,6 +7,10 @@ import User, { IUser } from "../models/user_model";
 
 let app: Express;
 const user: IUser = {
+  fullName: "John Doe",
+  age: 22,
+  gender: "male",
+  _id:"1234567890",
   email: "test@post.test",
   password: "1234567890",
 }

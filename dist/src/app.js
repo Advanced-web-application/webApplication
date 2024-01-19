@@ -8,7 +8,7 @@ dotenv_1.default.config();
 const express_1 = __importDefault(require("express"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const body_parser_1 = __importDefault(require("body-parser"));
-const Customer_route_1 = __importDefault(require("./routes/Customer_route"));
+const user_route_1 = __importDefault(require("./routes/user_route"));
 const post_route_1 = __importDefault(require("./routes/post_route"));
 const auth_route_1 = __importDefault(require("./routes/auth_route"));
 const initApp = () => {
@@ -21,7 +21,7 @@ const initApp = () => {
             const app = (0, express_1.default)();
             app.use(body_parser_1.default.json());
             app.use(body_parser_1.default.urlencoded({ extended: true }));
-            app.use("/customer", Customer_route_1.default);
+            app.use("/user", user_route_1.default);
             app.use("/post", post_route_1.default);
             app.use("/auth", auth_route_1.default);
             resolve(app);

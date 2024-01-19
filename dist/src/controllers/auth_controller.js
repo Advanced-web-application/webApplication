@@ -28,7 +28,14 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
         const salt = yield bcrypt_1.default.genSalt(10);
         const encryptedPassword = yield bcrypt_1.default.hash(password, salt);
-        const rs2 = yield user_model_1.default.create({ 'email': email, 'password': encryptedPassword });
+        const rs2 = yield user_model_1.default.create({
+            'fullName': "John Doe",
+            'age': 22,
+            'gender': "male",
+            '_id': "1234567890",
+            'email': email,
+            'password': encryptedPassword
+        });
         return res.status(201).send(rs2);
     }
     catch (err) {
@@ -52,6 +59,7 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
         const accessToken = jsonwebtoken_1.default.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRATION });
         const refreshToken = jsonwebtoken_1.default.sign({ _id: user._id }, process.env.JWT_REFRESH_SECRET);
+        console.log(" log in accessToken" + accessToken);
         if (user.refreshTokens == null) {
             user.refreshTokens = [refreshToken];
         }
