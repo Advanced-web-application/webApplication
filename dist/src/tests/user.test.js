@@ -100,5 +100,10 @@ describe("User tests", () => {
             .set("Authorization", "JWT " + accessToken);
         expect(response.statusCode).toBe(200);
     }));
+    test("Test Get All Students - empty response", () => __awaiter(void 0, void 0, void 0, function* () {
+        const response = yield (0, supertest_1.default)(app).get("/user").set("Authorization", "JWT " + accessToken);
+        expect(response.statusCode).toBe(200);
+        expect(response.body).toStrictEqual([]);
+    }));
 });
 //# sourceMappingURL=user.test.js.map

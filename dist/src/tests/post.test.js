@@ -87,6 +87,20 @@ describe("Post tests", () => {
         expect(response.statusCode).toBe(200);
         expect(response.body.name).toBe(updatedPost.name);
     }));
+    test("Test PUT with wrong id /post/:id", () => __awaiter(void 0, void 0, void 0, function* () {
+        const updatedPost = Object.assign(Object.assign({}, post1), { name: "changed name" });
+        const response = yield (0, supertest_1.default)(app)
+            .put("/post/" + "123")
+            .set("Authorization", "JWT " + accessToken)
+            .send(updatedPost);
+        expect(response.statusCode).toBe(406);
+    }));
+    test("Test DELETE with wrong id /post/:id", () => __awaiter(void 0, void 0, void 0, function* () {
+        const response = yield (0, supertest_1.default)(app)
+            .delete(`/post/"123"`)
+            .set("Authorization", "JWT " + accessToken);
+        expect(response.statusCode).toBe(406);
+    }));
     test("Test DELETE /post/:id", () => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield (0, supertest_1.default)(app)
             .delete(`/post/${postId}`)

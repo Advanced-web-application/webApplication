@@ -113,4 +113,12 @@ describe("User tests", () => {
     .set("Authorization", "JWT " + accessToken);
     expect(response.statusCode).toBe(200);
   });
+
+  test("Test Get All Students - empty response", async () => {
+    const response = await request(app).get("/user").set("Authorization", "JWT " + accessToken);
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toStrictEqual([]);
+  });
+
+
 });
