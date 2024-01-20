@@ -17,39 +17,63 @@ import authController from "../controllers/auth_controller";
 *       type: http
 *       scheme: bearer
 *       bearerFormat: JWT
-*
+*/
+
+/**
+* @swagger
+* components:
 *   schemas:
 *     User:
 *       type: object
 *       required:
 *         - fullName
 *         - age
-*         - _id
+*         - gender
 *         - email
 *         - password
 *       properties:
 *         fullName:
 *           type: string
-*           description: The user's full name
+*           description: The user's full name.
 *         age:
-*           type: number
-*           description: The user's age
+*           type: integer
+*           description: The user's age.
+*         gender:
+*           type: string
+*           description: The user's gender.
 *         _id:
 *           type: string
-*           description: The user's id
+*           description: The user's unique ID.
+*         image:
+*           type: string
+*           description: The user's image URL.
 *         email:
 *           type: string
-*           description: The user's email
+*           description: The user's email address.
 *         password:
 *           type: string
-*           description: The user's password
+*           description: The user's password.
+*         refreshTokens:
+*           type: array
+*           items:
+*             type: string
+*           description: The user's refresh tokens.
+*       example:
+*         fullName: "John Doe"
+*         age: 30
+*         gender: "Male"
+*         _id: "60d725b057d6d8c8c8febe8a"
+*         image: "http://example.com/image.jpg"
+*         email: "johndoe@example.com"
+*         password: "mySecurePassword"
+*         refreshTokens: ["token1", "token2"]
 */
 
 /**
 * @swagger
 * /auth/register:
 *   post:
-*     summary: registers a new user
+*     summary: Register a new user
 *     tags: [Auth]
 *     requestBody:
 *       required: true
@@ -73,6 +97,19 @@ import authController from "../controllers/auth_controller";
 *               properties:
 *                 message: 
 *                   type: string
+*               example:
+*                 message: "Invalid input data"
+*       401:
+*         description: Unauthorized
+*         content:
+*           application/json:
+*             schema:
+*               type: object
+*               properties:
+*                 message: 
+*                   type: string
+*               example:
+*                 message: "Unauthorized access"
 *       406:
 *         description: Not Acceptable
 *         content:
@@ -82,37 +119,52 @@ import authController from "../controllers/auth_controller";
 *               properties:
 *                 message: 
 *                   type: string
-*       201:
-*         description: Created
-*         content:
-*           application/json:
-*             schema:
-*               type: object
-*               properties:
-*                 message: 
-*                   type: string
+*               example:
+*                 message: "Request not acceptable"
 */
+
 router.post("/register", authController.register);
+
+/**
+* @swagger
+* components:
+*   schemas:
+*     Tokens:
+*       type: object
+*       required:
+*         - accessToken
+*         - refreshToken
+*       properties:
+*         accessToken:
+*           type: string
+*           description: The access token for the user session.
+*         refreshToken:
+*           type: string
+*           description: The refresh token for the user session.
+*       example:
+*         accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+*         refreshToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM9MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+*/
 
 /**
 * @swagger
 * /auth/login:
 *   post:
-*     summary: logs in a user
+*     summary: Login a user
 *     tags: [Auth]
 *     requestBody:
 *       required: true
 *       content:
 *         application/json:
 *           schema:
-*             $ref: '#/components/schemas/User'
+*             $ref: '#/components/schemas/Tokens'
 *     responses:
 *       200:
-*         description: The access & refresh tokens
+*         description: Successfully logged in
 *         content:
 *           application/json:
 *             schema:
-*               $ref: '#/components/schemas/Tokens'
+*               $ref: '#/components/schemas/User'
 *       400:
 *         description: Bad Request
 *         content:
@@ -120,8 +172,10 @@ router.post("/register", authController.register);
 *             schema:
 *               type: object
 *               properties:
-*                 message: "Invalid email or password"
+*                 message: 
 *                   type: string
+*               example:
+*                 message: "Invalid input data"
 *       401:
 *         description: Unauthorized
 *         content:
@@ -129,30 +183,33 @@ router.post("/register", authController.register);
 *             schema:
 *               type: object
 *               properties:
-*                 message: "Invalid email or password"
+*                 message: 
 *                   type: string
+*               example:
+*                 message: "Unauthorized access"
 */
+
+
 router.post("/login", authController.login);
 
 /**
 * @swagger
 * /auth/logout:
 *   get:
-*     summary: logout a user
+*     summary: Logout a user
 *     tags: [Auth]
-*     description: need to provide the refresh token in the auth header
-*     security:
-*       - bearerAuth: []
 *     responses:
 *       200:
-*         description: logout completed successfully
+*         description: Successfully logged out
 *         content:
 *           application/json:
 *             schema:
 *               type: object
 *               properties:
-*                 message: "Logout completed successfully"
+*                 message: 
 *                   type: string
+*               example:
+*                 message: "Successfully logged out"
 *       401:
 *         description: Unauthorized
 *         content:
@@ -160,18 +217,20 @@ router.post("/login", authController.login);
 *             schema:
 *               type: object
 *               properties:
-*                 message: "Invalid refresh token"
+*                 message: 
 *                   type: string
+*               example:
+*                 message: "Unauthorized access"
 */
-router.get("/logout", authController.logout);
+ router.get("/logout", authController.logout);
 
 /**
 * @swagger
 * /auth/refreshToken:
 *   get:
-*     summary: get a new access token using the refresh token
+*     summary: Get a new access token using the refresh token
 *     tags: [Auth]
-*     description: need to provide the refresh token in the auth header
+*     description: Need to provide the refresh token in the auth header
 *     security:
 *       - bearerAuth: []
 *     responses:
@@ -188,9 +247,14 @@ router.get("/logout", authController.logout);
 *             schema:
 *               type: object
 *               properties:
-*                 message: "Invalid refresh token"
+*                 message: 
 *                   type: string
+*               example:
+*                 message: "Unauthorized access"
 */
+
 router.get("/refreshToken", authController.refresh);
 
 export default router;
+
+
