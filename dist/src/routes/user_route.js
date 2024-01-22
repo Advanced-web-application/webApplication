@@ -7,12 +7,6 @@ const express_1 = __importDefault(require("express"));
 const router = express_1.default.Router();
 const user_controller_1 = __importDefault(require("../controllers/user_controller"));
 const auth_middleware_1 = __importDefault(require("../common/auth_middleware"));
-// router.get("/", authMiddleware, UserController.get.bind(UserController));
-// router.get("/:id", authMiddleware, UserController.getById.bind(UserController));
-// router.post("/", authMiddleware, UserController.post.bind(UserController));
-// router.put("/:id", authMiddleware, UserController.putById.bind(UserController));
-// router.delete("/:id", authMiddleware, UserController.deleteById.bind(UserController));
-//export default router;
 /**
 * @swagger
 * tags:
