@@ -6,6 +6,7 @@ import bodyParser from "body-parser";
 import UserRoute from "./routes/user_route";
 import PostRoute from "./routes/post_route";
 import authRoute from "./routes/auth_route";
+import restAPIRoute from "./routes/restAPI_route";
 
 const initApp = (): Promise<Express> => {
   const promise = new Promise<Express>((resolve) => {
@@ -20,6 +21,7 @@ const initApp = (): Promise<Express> => {
       app.use("/user", UserRoute);
       app.use("/post", PostRoute);
       app.use("/auth", authRoute);
+      app.use("/restAPI", restAPIRoute);
       resolve(app);
     });
   });

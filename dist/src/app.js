@@ -11,6 +11,7 @@ const body_parser_1 = __importDefault(require("body-parser"));
 const user_route_1 = __importDefault(require("./routes/user_route"));
 const post_route_1 = __importDefault(require("./routes/post_route"));
 const auth_route_1 = __importDefault(require("./routes/auth_route"));
+const restAPI_route_1 = __importDefault(require("./routes/restAPI_route"));
 const initApp = () => {
     const promise = new Promise((resolve) => {
         const db = mongoose_1.default.connection;
@@ -24,6 +25,7 @@ const initApp = () => {
             app.use("/user", user_route_1.default);
             app.use("/post", post_route_1.default);
             app.use("/auth", auth_route_1.default);
+            app.use("/restAPI", restAPI_route_1.default);
             resolve(app);
         });
     });
