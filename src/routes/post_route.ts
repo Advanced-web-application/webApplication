@@ -241,14 +241,3 @@ router.delete("/:id", authMiddleware, PostController.deleteById.bind(PostControl
 export default router;
 
 
-// router.get("/", PostController.get.bind(PostController));
-
-// router.get("/:id", PostController.getById.bind(PostController));
-
-// router.post("/", authMiddleware, PostController.post.bind(PostController));
-
-// router.put("/:id", authMiddleware, PostController.putById.bind(PostController));
-
-// router.delete("/:id", authMiddleware, PostController.deleteById.bind(PostController));
-
-// export default router;
