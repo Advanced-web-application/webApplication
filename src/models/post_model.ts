@@ -5,6 +5,7 @@ export interface IPost {
   description: string;
   price: number;
   owner: string;
+  comments?: string[];
   image?: string;
 }
 
@@ -24,6 +25,10 @@ const PostSchema = new mongoose.Schema<IPost>({
   owner: {
     type: String,
     required: true,
+  },
+  comments: {
+    type: [String],
+    required: false,
   },
   image: {
     type: String,

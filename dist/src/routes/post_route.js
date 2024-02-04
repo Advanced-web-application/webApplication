@@ -232,11 +232,6 @@ router.put("/:id", auth_middleware_1.default, post_controller_1.default.putById.
 *                 message: "Not Acceptable"
 */
 router.delete("/:id", auth_middleware_1.default, post_controller_1.default.deleteById.bind(post_controller_1.default));
+router.put("/comment/:id", auth_middleware_1.default, post_controller_1.default.addComment.bind(post_controller_1.default));
 exports.default = router;
-// router.get("/", PostController.get.bind(PostController));
-// router.get("/:id", PostController.getById.bind(PostController));
-// router.post("/", authMiddleware, PostController.post.bind(PostController));
-// router.put("/:id", authMiddleware, PostController.putById.bind(PostController));
-// router.delete("/:id", authMiddleware, PostController.deleteById.bind(PostController));
-// export default router;
 //# sourceMappingURL=post_route.js.map

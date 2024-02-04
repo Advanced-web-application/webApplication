@@ -238,6 +238,13 @@ router.put("/:id", authMiddleware, PostController.putById.bind(PostController));
 */
 router.delete("/:id", authMiddleware, PostController.deleteById.bind(PostController));
 
+router.put("/comment/:id", authMiddleware, PostController.addComment.bind(PostController));
+
+
+
+
+
+
 export default router;
 
 
