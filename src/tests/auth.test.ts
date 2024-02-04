@@ -58,6 +58,8 @@ describe("Auth tests", () => {
     accessToken = response.body.accessToken;
     refreshToken = response.body.refreshToken;
     expect(accessToken).toBeDefined();
+    expect(response.body.user._id).toBe(user._id);
+    console.log("user from login: " + response.body.user._id);
   });
 
   test("Test Login without password", async () => {
