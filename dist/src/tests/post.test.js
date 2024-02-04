@@ -107,5 +107,25 @@ describe("Post tests", () => {
             .set("Authorization", "JWT " + accessToken);
         expect(response.statusCode).toBe(200);
     }));
+    const post2 = {
+        name: "test post2",
+        description: "test description2",
+        price: 100,
+        owner: "123",
+    };
+    test("Add Comment /put/comment", () => __awaiter(void 0, void 0, void 0, function* () {
+        addPost(post2);
+        const res = yield (0, supertest_1.default)(app).get("/post");
+        expect(res.statusCode).toBe(200);
+        const rc = res.body[0];
+        postId = rc._id;
+        console.log("postId2: " + postId);
+        const response = yield (0, supertest_1.default)(app)
+            .put("/post/comment/" + postId)
+            .set("Authorization", "JWT " + accessToken)
+            .send({ comment: "test comment" });
+        expect(response.statusCode).toBe(200);
+        expect(response.body.comments[0]).toBe("test comment");
+    }));
 });
 //# sourceMappingURL=post.test.js.map

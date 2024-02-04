@@ -21,6 +21,10 @@ const PostSchema = new mongoose_1.default.Schema({
         type: String,
         required: true,
     },
+    comments: {
+        type: [String],
+        required: false,
+    },
     image: {
         type: String,
         required: false,

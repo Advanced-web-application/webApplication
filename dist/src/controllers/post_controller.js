@@ -29,6 +29,26 @@ class PostController extends base_controller_1.BaseController {
             _super.post.call(this, req, res);
         });
     }
+    addComment(req, res) {
+        var _a;
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log("addComment:" + req.body);
+            try {
+                const post = yield this.model.findById(req.params.id);
+                if (post) {
+                    (_a = post.comments) === null || _a === void 0 ? void 0 : _a.push(req.body.comment);
+                    yield post.save();
+                    res.status(200).send(post);
+                }
+                else {
+                    res.status(404).send("Post not found");
+                }
+            }
+            catch (err) {
+                res.status(500).send("fail: " + err.message);
+            }
+        });
+    }
 }
 exports.default = new PostController();
 //# sourceMappingURL=post_controller.js.map

@@ -14,6 +14,25 @@ class PostController extends BaseController<IPost>{
         req.body.owner = _id;
         super.post(req, res);
     }
+
+    async addComment(req: AuthResquest, res: Response) {
+        console.log("addComment:" + req.body);
+        try {
+            const post = await this.model.findById(req.params.id);
+            if (post) {
+                post.comments?.push(req.body.comment);
+                await post.save();
+                res.status(200).send(post);
+            } else {
+                res.status(404).send("Post not found");
+            }
+        } catch (err) {
+            res.status(500).send("fail: " + err.message);
+        }
+
+    }
+
+
 }
 
 export default new PostController();
