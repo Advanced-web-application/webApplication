@@ -61,7 +61,8 @@ const login = async (req: Request, res: Response) => {
         await user.save();
         return res.status(200).send({
             'accessToken': accessToken,
-            'refreshToken': refreshToken
+            'refreshToken': refreshToken,
+            'user': user
         });
     } catch (err) {
         return res.status(400).send("error missing email or password");

@@ -63,6 +63,8 @@ describe("Auth tests", () => {
         accessToken = response.body.accessToken;
         refreshToken = response.body.refreshToken;
         expect(accessToken).toBeDefined();
+        expect(response.body.user._id).toBe(user._id);
+        console.log("user from login: " + response.body.user._id);
     }));
     test("Test Login without password", () => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield (0, supertest_1.default)(app)
