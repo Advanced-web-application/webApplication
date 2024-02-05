@@ -107,7 +107,7 @@ import authMiddleware from "../common/auth_middleware";
 *               example:
 *                 message: "Internal Server Error"
 */
-router.get("/:id", authMiddleware, UserController.getById.bind(UserController));
+router.get("/:id",  UserController.getById.bind(UserController));
 
 /**
 * @swagger
@@ -176,7 +176,7 @@ router.post("/", authMiddleware, UserController.post.bind(UserController));
 *               example:
 *                 message: "Not Acceptable"
 */
-router.put("/:id", authMiddleware, UserController.putById.bind(UserController));
+router.put("/:id", UserController.putById.bind(UserController)); // need to add authMiddleware 
 
 /**
 * @swagger
