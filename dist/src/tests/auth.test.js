@@ -110,6 +110,7 @@ describe("Auth tests", () => {
             .set("Authorization", "JWT " + accessToken);
         expect(response.statusCode).not.toBe(200);
     }));
+    refreshToken = "JWT " + refreshToken;
     test("Test refresh token", () => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield (0, supertest_1.default)(app)
             .get("/auth/refresh")

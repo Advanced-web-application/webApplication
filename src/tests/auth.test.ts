@@ -116,6 +116,7 @@ describe("Auth tests", () => {
     expect(response.statusCode).not.toBe(200);
   });
 
+ 
   test("Test refresh token", async () => {
     const response = await request(app)
       .get("/auth/refresh")
