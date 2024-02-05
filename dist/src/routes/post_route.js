@@ -192,7 +192,7 @@ router.post("/", auth_middleware_1.default, post_controller_1.default.post.bind(
 *               example:
 *                 message: "Not Acceptable"
 */
-router.put("/:id", auth_middleware_1.default, post_controller_1.default.putById.bind(post_controller_1.default));
+router.put("/:id", post_controller_1.default.putById.bind(post_controller_1.default)); // need to add authMiddleware
 /**
 * @swagger
 * /post/{id}:

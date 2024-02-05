@@ -196,7 +196,7 @@ router.post("/", authMiddleware, PostController.post.bind(PostController));
 *               example:
 *                 message: "Not Acceptable"
 */
-router.put("/:id", authMiddleware, PostController.putById.bind(PostController));
+router.put("/:id", PostController.putById.bind(PostController)); // need to add authMiddleware
 
 /**
 * @swagger

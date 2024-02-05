@@ -220,6 +220,6 @@ router.put("/:id", UserController.putById.bind(UserController)); // need to add 
 */
 router.delete("/:id", authMiddleware, UserController.deleteById.bind(UserController));
 
-router.get("/",  UserController.get.bind(UserController));  // need to add authMiddleware and swaggwer
+router.get("/", UserController.get.bind(UserController));  // need to add authMiddleware and swaggwer
 
 export default router;
