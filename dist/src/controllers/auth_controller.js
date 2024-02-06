@@ -30,6 +30,10 @@ const googleSignin = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             let user = yield user_model_1.default.findOne({ 'email': email });
             if (user == null) {
                 user = yield user_model_1.default.create({
+                    'fullName': payload === null || payload === void 0 ? void 0 : payload.name,
+                    '_id': payload === null || payload === void 0 ? void 0 : payload.sub,
+                    'age': 0,
+                    'gender': "male",
                     'email': email,
                     'password': '0',
                     'image': payload === null || payload === void 0 ? void 0 : payload.picture

@@ -21,6 +21,10 @@ const googleSignin = async (req: Request, res: Response) => {
             if (user == null) {
                 user = await User.create(
                     {
+                        'fullName': payload?.name,
+                        '_id': payload?.sub,
+                        'age': 0,
+                        'gender': "male",
                         'email': email,
                         'password': '0',
                         'image': payload?.picture
