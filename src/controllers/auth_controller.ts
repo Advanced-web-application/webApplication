@@ -1,7 +1,60 @@
 import { Request, Response } from 'express';
-import User from '../models/user_model';
+import User, { IUser }  from '../models/user_model';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { OAuth2Client } from 'google-auth-library';
+import { Document } from 'mongoose';
+
+
+const client = new OAuth2Client();
+const googleSignin = async (req: Request, res: Response) => {
+    console.log(req.body);
+    try {
+        const ticket = await client.verifyIdToken({
+            idToken: req.body.credential,
+            audience: process.env.GOOGLE_CLIENT_ID,
+        });
+        const payload = ticket.getPayload();
+        const email = payload?.email;
+        if (email != null) {
+            let user = await User.findOne({ 'email': email });
+            if (user == null) {
+                user = await User.create(
+                    {
+                        'email': email,
+                        'password': '0',
+                        'image': payload?.picture
+                    });
+            }
+            const tokens = await generateTokens(user)
+            res.status(200).send(
+                {
+                    email: user.email,
+                    _id: user._id,
+                    image: user.image,
+                    ...tokens
+                })
+        }
+    } catch (err) {
+        return res.status(400).send(err.message);
+    }
+
+}
+
+const generateTokens = async (user: Document & IUser) => {
+    const accessToken = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRATION });
+    const refreshToken = jwt.sign({ _id: user._id }, process.env.JWT_REFRESH_SECRET);
+    if (user.refreshTokens == null) {
+        user.refreshTokens = [refreshToken];
+    } else {
+        user.refreshTokens.push(refreshToken);
+    }
+    await user.save();
+    return {
+        'accessToken': accessToken,
+        'refreshToken': refreshToken
+    };
+}
 
 const register = async (req: Request, res: Response) => {
     const fullName = req.body.fullName;
@@ -27,7 +80,17 @@ const register = async (req: Request, res: Response) => {
         '_id':id,
         'email': email, 
         'password': encryptedPassword });
-        return res.status(201).send(rs2);
+
+        const tokens = await generateTokens(rs2)
+        return res.status(201).send({
+            'fullName': fullName,
+            'age':age,
+            'gender':gender,
+            '_id':id,
+            'email': email, 
+            'password': encryptedPassword,
+            ...tokens
+        });
     } catch (err) {
         return res.status(400).send("error missing email or password");
     }
@@ -48,21 +111,10 @@ const login = async (req: Request, res: Response) => {
         if (!match) {
             return res.status(401).send("email or password incorrect");
         }
-
-        const accessToken = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRATION });
-        const refreshToken = jwt.sign({ _id: user._id }, process.env.JWT_REFRESH_SECRET);
-        console.log(" log in accessToken: " + accessToken);
-        console.log(" log in refreshToken: " + refreshToken);
-        if (user.refreshTokens == null) {
-            user.refreshTokens = [refreshToken];
-        } else {
-            user.refreshTokens.push(refreshToken);
-        }
-        await user.save();
+        const tokens = await generateTokens(user)
         return res.status(200).send({
-            'accessToken': accessToken,
-            'refreshToken': refreshToken,
-            'user': user
+           ...tokens,
+            'user': user,
         });
     } catch (err) {
         return res.status(400).send("error missing email or password");
@@ -125,6 +177,7 @@ const refresh = async (req: Request, res: Response) => {
 }
 
 export default {
+    googleSignin,
     register,
     login,
     logout,
