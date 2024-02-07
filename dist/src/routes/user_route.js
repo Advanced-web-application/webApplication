@@ -106,7 +106,7 @@ const auth_middleware_1 = __importDefault(require("../common/auth_middleware"));
 *               example:
 *                 message: "Internal Server Error"
 */
-router.get("/:id", user_controller_1.default.getById.bind(user_controller_1.default));
+router.get("/:id", auth_middleware_1.default, user_controller_1.default.getById.bind(user_controller_1.default));
 /**
 * @swagger
 * /user:
