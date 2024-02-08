@@ -110,7 +110,7 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             return res.status(401).send("email or password incorrect");
         }
         const tokens = yield generateTokens(user);
-        return res.status(200).send(Object.assign(Object.assign({}, tokens), { 'user': user }));
+        return res.status(200).send(Object.assign({ 'fullName': user.fullName, 'age': user.age, 'gender': user.gender, '_id': user._id, 'email': user.email, 'password': user.password }, tokens));
     }
     catch (err) {
         return res.status(400).send("error missing email or password");
