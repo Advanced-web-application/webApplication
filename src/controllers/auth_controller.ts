@@ -117,8 +117,13 @@ const login = async (req: Request, res: Response) => {
         }
         const tokens = await generateTokens(user)
         return res.status(200).send({
-           ...tokens,
-            'user': user,
+            'fullName': user.fullName,
+            'age':user.age,
+            'gender':user.gender,
+            '_id':user._id,
+            'email': user.email, 
+            'password': user.password,
+            ...tokens
         });
     } catch (err) {
         return res.status(400).send("error missing email or password");
