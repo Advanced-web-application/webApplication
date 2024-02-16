@@ -232,6 +232,6 @@ router.put("/:id", post_controller_1.default.putById.bind(post_controller_1.defa
 *                 message: "Not Acceptable"
 */
 router.delete("/:id", auth_middleware_1.default, post_controller_1.default.deleteById.bind(post_controller_1.default));
-router.put("/comment/:id", auth_middleware_1.default, post_controller_1.default.addComment.bind(post_controller_1.default));
+router.put("/comment/:id", post_controller_1.default.addComment.bind(post_controller_1.default)); // need to add authMiddleware
 exports.default = router;
 //# sourceMappingURL=post_route.js.map
