@@ -240,7 +240,8 @@ router.delete("/:id", authMiddleware, PostController.deleteById.bind(PostControl
 
 router.put("/comment/:id",  PostController.addComment.bind(PostController)); // need to add authMiddleware
 
-
+//post route to get posts by user
+router.get('/posts', PostController.getPostsByUser);
 
 
 
