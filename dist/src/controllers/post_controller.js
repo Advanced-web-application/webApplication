@@ -49,6 +49,18 @@ class PostController extends base_controller_1.BaseController {
             }
         });
     }
+    // get posts by user - posts filtered by user
+    getPostsByUser(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const posts = yield this.model.find({ owner: req.query.userID });
+                res.status(200).send(posts);
+            }
+            catch (err) {
+                res.status(500).send("fail: " + err.message);
+            }
+        });
+    }
 }
 exports.default = new PostController();
 //# sourceMappingURL=post_controller.js.map

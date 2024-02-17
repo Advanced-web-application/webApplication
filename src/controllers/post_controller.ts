@@ -32,16 +32,6 @@ class PostController extends BaseController<IPost>{
 
     }
 
-    // get posts by user - posts filtered by user
-    async getPostsByUser(req: AuthResquest, res: Response) {
-        try {
-            const posts = await this.model.find({ owner: req.query.userID });
-            res.status(200).send(posts);
-        } catch (err) {
-            res.status(500).send("fail: " + err.message);
-        }
-    }
-
 
 }
 
