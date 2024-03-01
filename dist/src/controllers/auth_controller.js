@@ -146,6 +146,8 @@ const logout = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 const refresh = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const authHeader = req.headers['authorization'];
     const refreshToken = authHeader && authHeader.split(' ')[1]; // Bearer <token>
+    console.log(refreshToken);
+    console.log(process.env.JWT_REFRESH_SECRET);
     if (refreshToken == null)
         return res.sendStatus(401);
     jsonwebtoken_1.default.verify(refreshToken, process.env.JWT_REFRESH_SECRET, (err, user) => __awaiter(void 0, void 0, void 0, function* () {
@@ -155,7 +157,9 @@ const refresh = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
         try {
             const userDb = yield user_model_1.default.findOne({ '_id': user._id });
+            console.log(user._id);
             if (!userDb.refreshTokens || !userDb.refreshTokens.includes(refreshToken)) {
+                console.log(userDb.refreshTokens);
                 userDb.refreshTokens = [];
                 yield userDb.save();
                 return res.sendStatus(401);
@@ -167,7 +171,7 @@ const refresh = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             yield userDb.save();
             return res.status(200).send({
                 'accessToken': accessToken,
-                'refreshToken': refreshToken
+                'refreshToken': newRefreshToken
             });
         }
         catch (err) {

@@ -233,7 +233,5 @@ router.put("/:id", post_controller_1.default.putById.bind(post_controller_1.defa
 */
 router.delete("/:id", auth_middleware_1.default, post_controller_1.default.deleteById.bind(post_controller_1.default));
 router.put("/comment/:id", post_controller_1.default.addComment.bind(post_controller_1.default)); // need to add authMiddleware
-//post route to get posts by user
-router.get('/posts', post_controller_1.default.getPostsByUser);
 exports.default = router;
 //# sourceMappingURL=post_route.js.map

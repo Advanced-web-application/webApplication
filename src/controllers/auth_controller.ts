@@ -157,6 +157,8 @@ const logout = async (req: Request, res: Response) => {
 const refresh = async (req: Request, res: Response) => {
     const authHeader = req.headers['authorization'];
     const refreshToken = authHeader && authHeader.split(' ')[1]; // Bearer <token>
+    console.log(refreshToken);
+    console.log(process.env.JWT_REFRESH_SECRET);
     if (refreshToken == null) return res.sendStatus(401);
     jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET, async (err, user: { '_id': string }) => {
         if (err) {
@@ -165,7 +167,9 @@ const refresh = async (req: Request, res: Response) => {
         }
         try {
             const userDb = await User.findOne({ '_id': user._id });
+            console.log(user._id);
             if (!userDb.refreshTokens || !userDb.refreshTokens.includes(refreshToken)) {
+                console.log(userDb.refreshTokens);
                 userDb.refreshTokens = [];
                 await userDb.save();
                 return res.sendStatus(401);
@@ -177,7 +181,7 @@ const refresh = async (req: Request, res: Response) => {
             await userDb.save();
             return res.status(200).send({
                 'accessToken': accessToken,
-                'refreshToken': refreshToken
+                'refreshToken': newRefreshToken
             });
         } catch (err) {
             res.sendStatus(401).send(err.message);
