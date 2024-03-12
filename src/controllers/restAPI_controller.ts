@@ -46,6 +46,7 @@ import { Request, Response } from 'express';
     };
     try {
       const { data } = await axios.request(options);
+      console.log(data);
       res.status(200).send(data);
     } catch (error) {
       console.error(error);

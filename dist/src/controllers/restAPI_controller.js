@@ -57,6 +57,7 @@ class RestAPIController {
             };
             try {
                 const { data } = yield axios_1.default.request(options);
+                console.log(data);
                 res.status(200).send(data);
             }
             catch (error) {
