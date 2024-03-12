@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import { Express } from "express";
 import User from "../models/user_model";
 
+
 let app: Express;
 const user = {
   fullName: "John",
@@ -187,4 +188,19 @@ describe("Auth tests", () => {
       .send();
     expect(response.statusCode).not.toBe(200);
   });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 });

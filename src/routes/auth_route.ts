@@ -124,6 +124,60 @@ import authController from "../controllers/auth_controller";
 */
 
 router.post("/register", authController.register);
+
+/**
+* @swagger
+* components:
+*   schemas:
+*     GoogleSignin:
+*       type: object
+*       required:
+*         - token
+*       properties:
+*         token:
+*           type: string
+*           description: The Google token  
+*       example:
+*         token: "googleToken"
+*/
+
+
+/**
+* @swagger
+ * /Auth/google:
+ *   post:
+ *     summary: Sign in with Google
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/GoogleSignin'
+ *     responses:
+ *       200:
+ *         description: Successful sign in
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 token:
+ *                   type: string
+ *                 user:
+ *                   type: object
+ *       400:
+ *         description: Bad Request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message: 
+ *                   type: string
+ *               example:
+ *                 message: "Bad Request"
+ */
 router.post("/google", authController.googleSignin);
 
 /**

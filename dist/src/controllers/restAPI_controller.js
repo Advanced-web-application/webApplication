@@ -12,6 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.RestAPIController = void 0;
 const axios_1 = __importDefault(require("axios"));
 // Move the interface outside the class
 // interface Response {
@@ -56,7 +57,7 @@ class RestAPIController {
             };
             try {
                 const { data } = yield axios_1.default.request(options);
-                res.send(data);
+                res.status(200).send(data);
             }
             catch (error) {
                 console.error(error);
@@ -65,5 +66,6 @@ class RestAPIController {
         });
     }
 }
+exports.RestAPIController = RestAPIController;
 exports.default = new RestAPIController();
 //# sourceMappingURL=restAPI_controller.js.map

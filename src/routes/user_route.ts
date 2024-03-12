@@ -220,6 +220,38 @@ router.put("/:id", authMiddleware, UserController.putById.bind(UserController));
 */
 router.delete("/:id", authMiddleware, UserController.deleteById.bind(UserController));
 
+/**
+* @swagger
+* /user:
+*   get:
+*     summary: Get all users
+*     tags: [User]
+*     security:
+*       - bearerAuth: []
+*     responses:
+*       200:
+*         description: Array of User objects
+*         content:
+*           application/json:
+*             schema:
+*               type: array
+*               items:
+*                 $ref: '#/components/schemas/User'
+*       401:
+*         description: Unauthorized
+*       406:
+*         description: Not Acceptable
+*         content:
+*           application/json:
+*             schema:
+*               type: object
+*               properties:
+*                 message: 
+*                   type: string
+*               example:
+*                 message: "Not Acceptable"
+* */
+
 router.get("/",authMiddleware, UserController.get.bind(UserController));  // need to add authMiddleware and swaggwer
 
 export default router;

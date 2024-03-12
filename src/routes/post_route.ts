@@ -238,11 +238,48 @@ router.put("/:id", authMiddleware, PostController.putById.bind(PostController));
 */
 router.delete("/:id", authMiddleware, PostController.deleteById.bind(PostController));
 
-router.put("/comment/:id", authMiddleware, PostController.addComment.bind(PostController)); // need to add authMiddleware
+/**
+ * @swagger
+ * /comment/{id}:
+ *   put:
+ *     summary: Add a comment to a post
+ *     tags: [Post]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: The updated post
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message: 
+ *                   type: string
+ *               example:
+ *                 message: "comment added successfully"
+ *       404:
+ *         description: Post not found
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message: 
+ *                   type: string
+ *               example:
+ *                 message: "Internal Server Error"
+ */
 
-
-
-
+router.put("/comment/:id", authMiddleware, PostController.addComment.bind(PostController));
 
 export default router;
 

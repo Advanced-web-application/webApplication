@@ -214,6 +214,37 @@ router.put("/:id", auth_middleware_1.default, user_controller_1.default.putById.
 *                 message: "Not Acceptable"
 */
 router.delete("/:id", auth_middleware_1.default, user_controller_1.default.deleteById.bind(user_controller_1.default));
+/**
+* @swagger
+* /user:
+*   get:
+*     summary: Get all users
+*     tags: [User]
+*     security:
+*       - bearerAuth: []
+*     responses:
+*       200:
+*         description: Array of User objects
+*         content:
+*           application/json:
+*             schema:
+*               type: array
+*               items:
+*                 $ref: '#/components/schemas/User'
+*       401:
+*         description: Unauthorized
+*       406:
+*         description: Not Acceptable
+*         content:
+*           application/json:
+*             schema:
+*               type: object
+*               properties:
+*                 message:
+*                   type: string
+*               example:
+*                 message: "Not Acceptable"
+* */
 router.get("/", auth_middleware_1.default, user_controller_1.default.get.bind(user_controller_1.default)); // need to add authMiddleware and swaggwer
 exports.default = router;
 //# sourceMappingURL=user_route.js.map
