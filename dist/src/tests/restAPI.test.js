@@ -40,8 +40,7 @@ afterAll(() => __awaiter(void 0, void 0, void 0, function* () {
 }));
 describe("Rest API tests", () => {
     test("Test Get Rest API", () => __awaiter(void 0, void 0, void 0, function* () {
-        const response = yield (0, supertest_1.default)(app).get("/restAPI")
-            .set("Authorization", "JWT " + accessToken);
+        const response = yield (0, supertest_1.default)(app).get("/restAPI");
         expect(response.statusCode).toBe(200);
     }));
 });

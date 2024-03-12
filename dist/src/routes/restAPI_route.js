@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const router = express_1.default.Router();
 const restAPI_controller_1 = __importDefault(require("../controllers/restAPI_controller"));
-const auth_middleware_1 = __importDefault(require("../common/auth_middleware"));
 /**
 * @swagger
 * tags:
@@ -82,6 +81,6 @@ const auth_middleware_1 = __importDefault(require("../common/auth_middleware"));
 *               example:
 *                 message: "Internal Server Error"
 * */
-router.get("/", auth_middleware_1.default, restAPI_controller_1.default.getCurrencyRate.bind(restAPI_controller_1.default));
+router.get("/", restAPI_controller_1.default.getCurrencyRate.bind(restAPI_controller_1.default));
 exports.default = router;
 //# sourceMappingURL=restAPI_route.js.map

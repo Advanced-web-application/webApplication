@@ -46,7 +46,6 @@ afterAll(async () => {
 describe("Rest API tests", () => {
   test("Test Get Rest API", async () => {
     const response = await request(app).get("/restAPI")
-    .set("Authorization", "JWT " + accessToken);
     expect(response.statusCode).toBe(200);
   });
 
