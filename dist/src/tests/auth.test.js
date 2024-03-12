@@ -109,15 +109,20 @@ describe("Auth tests", () => {
             .get("/user")
             .set("Authorization", "JWT " + accessToken);
         expect(response.statusCode).not.toBe(200);
+        console.log("response.statusCode of timeout: " + response.statusCode);
     }));
     test("Test refresh token", () => __awaiter(void 0, void 0, void 0, function* () {
+        console.log("Test refresh token: " + refreshToken);
         const response = yield (0, supertest_1.default)(app)
-            .get("/auth/refresh")
+            .get("/auth/refreshToken")
             .set("Authorization", "JWT " + refreshToken)
             .send();
+        console.log("response.statusCode: " + response.statusCode);
         expect(response.statusCode).toBe(200);
         expect(response.body.accessToken).toBeDefined();
+        console.log("new access token from test: " + response.body.accessToken);
         expect(response.body.refreshToken).toBeDefined();
+        console.log("new refresh token from test: " + response.body.refreshToken);
         const newAccessToken = response.body.accessToken;
         newRefreshToken = response.body.refreshToken;
         const response2 = yield (0, supertest_1.default)(app)
@@ -131,12 +136,14 @@ describe("Auth tests", () => {
             .set("Authorization", "JWT " + refreshToken)
             .send();
         expect(response.statusCode).not.toBe(200);
+        console.log("new refresh token from double: " + response.statusCode);
         //verify that the new token is not valid as well
         const response1 = yield (0, supertest_1.default)(app)
             .get("/auth/refresh")
             .set("Authorization", "JWT " + newRefreshToken)
             .send();
         expect(response1.statusCode).not.toBe(200);
+        console.log("new refresh token from double 2: " + response.statusCode);
     }));
     let LogOutaccessToken;
     let LogOutrefreshToken;

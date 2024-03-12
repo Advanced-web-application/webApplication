@@ -214,6 +214,6 @@ router.put("/:id", auth_middleware_1.default, user_controller_1.default.putById.
 *                 message: "Not Acceptable"
 */
 router.delete("/:id", auth_middleware_1.default, user_controller_1.default.deleteById.bind(user_controller_1.default));
-router.get("/", user_controller_1.default.get.bind(user_controller_1.default)); // need to add authMiddleware and swaggwer
+router.get("/", auth_middleware_1.default, user_controller_1.default.get.bind(user_controller_1.default)); // need to add authMiddleware and swaggwer
 exports.default = router;
 //# sourceMappingURL=user_route.js.map
