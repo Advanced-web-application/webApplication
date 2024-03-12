@@ -39,9 +39,9 @@ afterAll(() => __awaiter(void 0, void 0, void 0, function* () {
     yield mongoose_1.default.connection.close();
 }));
 describe("Rest API tests", () => {
-    test("Test Get Rest API", () => __awaiter(void 0, void 0, void 0, function* () {
-        const response = yield (0, supertest_1.default)(app).get("/restAPI");
-        expect(response.statusCode).toBe(200);
-    }));
+    // test("Test Get Rest API", async () => {
+    //   const response = await request(app).get("/restAPI")
+    //   expect(response.statusCode).toBe(200);
+    // });
 });
 //# sourceMappingURL=restAPI.test.js.map

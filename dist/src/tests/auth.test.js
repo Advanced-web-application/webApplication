@@ -37,6 +37,19 @@ let accessToken;
 let refreshToken;
 let newRefreshToken;
 describe("Auth tests", () => {
+    test("Test Google Signin", () => __awaiter(void 0, void 0, void 0, function* () {
+        const mockGoogleToken = 'eyJhbGciOiJSUzI1NiIsImtpZCI6IjA4YmY1YzM3NzJkZDRlN2E3MjdhMTAxYmY1MjBmNjU3NWNhYzMyNmYiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI4OTU2MzQyNjcwMTEtY3YybzkxMHJuY2E5OTQyM3VkM2VuMGpzMHJhaWRmbGguYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI4OTU2MzQyNjcwMTEtY3YybzkxMHJuY2E5OTQyM3VkM2VuMGpzMHJhaWRmbGguYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDA3Nzg1MDI0MzAxODYyNjcwNTUiLCJlbWFpbCI6Im1pY2hhbDI3OTIwMDBAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5iZiI6MTcxMDI2NDAyOSwibmFtZSI6Itee15nXm9ecINee16HXptez15kiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jTE0zTTI2UnFDRkZmbWxWVmdfWUEyQ0ZRTzZfRFRjWUJBSzVNOUZrb1k9czk2LWMiLCJnaXZlbl9uYW1lIjoi157Xmdeb15wiLCJmYW1pbHlfbmFtZSI6Itee16HXptez15kiLCJsb2NhbGUiOiJoZSIsImlhdCI6MTcxMDI2NDMyOSwiZXhwIjoxNzEwMjY3OTI5LCJqdGkiOiJjN2RjYTA2ODJlZGJiNzk4NDBlMTU5MzE4ZTczOTgzNjBhNGU1ZWJmIn0.YSaQ9PvfevkQ-uss3JeyAhqT0Zfrg9obXde41y8I1ZdY68kOY93tor13abRQt4hgLOKqy2vRMnbGd_eYCVCnIGQv6PEgXCd4L2o4zgyXlyUK4MhgvX5B7wy_m6fl37R82vQQXf9M-PHl5U_5x7_wHmbrb6E2DQurymYpKaFfAfBiteFyzykPj96f82Nb8NQuEjLdE3y2I_ReZS33LsyEScOpPXU6qnce5RV0Q0FQUTnxznLD3oY10HmaZiMEobxP92LnKmgVPWd4jn3taKz09w0aK0QZvYcAgDq-8pVq9HhQxwDAzV5l58wNYp7PGx3Gi_XDtYVZc1tu8Q4BnKjf2A';
+        const response = yield (0, supertest_1.default)(app)
+            .post("/auth/google")
+            .send({ credential: mockGoogleToken });
+        console.log("Response Body:", response.body);
+        expect(response.statusCode).toBe(200);
+        expect(response.body.email).toBeDefined();
+        expect(response.body._id).toBeDefined();
+        expect(response.body.image).toBeDefined();
+        expect(response.body.accessToken).toBeDefined();
+        expect(response.body.refreshToken).toBeDefined();
+    }));
     test("Test Register", () => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield (0, supertest_1.default)(app)
             .post("/auth/register")

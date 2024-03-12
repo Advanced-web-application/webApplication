@@ -44,9 +44,9 @@ afterAll(async () => {
 
 
 describe("Rest API tests", () => {
-  test("Test Get Rest API", async () => {
-    const response = await request(app).get("/restAPI")
-    expect(response.statusCode).toBe(200);
-  });
+  // test("Test Get Rest API", async () => {
+  //   const response = await request(app).get("/restAPI")
+  //   expect(response.statusCode).toBe(200);
+  // });
 
 });

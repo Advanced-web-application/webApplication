@@ -36,6 +36,7 @@ beforeAll(() => __awaiter(void 0, void 0, void 0, function* () {
     user._id = response.body._id;
     const response2 = yield (0, supertest_1.default)(app).post("/auth/login").send(user);
     accessToken = response2.body.accessToken;
+    console.log("accessToken: " + accessToken);
 }));
 afterAll(() => __awaiter(void 0, void 0, void 0, function* () {
     yield mongoose_1.default.connection.close();
@@ -64,7 +65,7 @@ describe("Post tests", () => {
         expect(response.body).toStrictEqual([]);
     }));
     test("Test Post post", () => __awaiter(void 0, void 0, void 0, function* () {
-        addPost(post1);
+        yield addPost(post1);
     }));
     let postId;
     test("Test Get All posts with one post in DB", () => __awaiter(void 0, void 0, void 0, function* () {
