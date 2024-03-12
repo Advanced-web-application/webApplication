@@ -232,6 +232,46 @@ router.put("/:id", auth_middleware_1.default, post_controller_1.default.putById.
 *                 message: "Not Acceptable"
 */
 router.delete("/:id", auth_middleware_1.default, post_controller_1.default.deleteById.bind(post_controller_1.default));
-router.put("/comment/:id", auth_middleware_1.default, post_controller_1.default.addComment.bind(post_controller_1.default)); // need to add authMiddleware
+/**
+ * @swagger
+ * /comment/{id}:
+ *   put:
+ *     summary: Add a comment to a post
+ *     tags: [Post]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: The updated post
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *               example:
+ *                 message: "comment added successfully"
+ *       404:
+ *         description: Post not found
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *               example:
+ *                 message: "Internal Server Error"
+ */
+router.put("/comment/:id", auth_middleware_1.default, post_controller_1.default.addComment.bind(post_controller_1.default));
 exports.default = router;
 //# sourceMappingURL=post_route.js.map
