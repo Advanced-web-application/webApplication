@@ -124,6 +124,7 @@ import authController from "../controllers/auth_controller";
 */
 
 router.post("/register", authController.register);
+//implement google swagger /TODO
 router.post("/google", authController.googleSignin);
 
 /**
