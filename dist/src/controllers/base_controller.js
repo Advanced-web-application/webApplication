@@ -16,7 +16,7 @@ class BaseController {
     }
     get(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log("getAllStudents");
+            console.log("getAll");
             try {
                 if (req.query.name) {
                     const students = yield this.model.find({ name: req.query.name });
@@ -34,7 +34,7 @@ class BaseController {
     }
     getById(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log("getStudentById:" + req.params.id);
+            console.log("getById:" + req.params.id);
             try {
                 const student = yield this.model.findById(req.params.id);
                 res.send(student);
@@ -46,7 +46,7 @@ class BaseController {
     }
     post(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log("postStudent:" + req.body);
+            console.log("post:" + req.body);
             try {
                 const obj = yield this.model.create(req.body);
                 res.status(201).send(obj);
@@ -59,7 +59,7 @@ class BaseController {
     }
     putById(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log("putStudent:" + req.body);
+            console.log("putById:" + req.body);
             try {
                 yield this.model.findByIdAndUpdate(req.params.id, req.body);
                 const obj = yield this.model.findById(req.params.id);
