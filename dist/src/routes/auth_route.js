@@ -124,9 +124,6 @@ const auth_controller_1 = __importDefault(require("../controllers/auth_controlle
 *                 message: "Request not acceptable"
 */
 router.post("/register", auth_controller_1.default.register);
-<<<<<<< HEAD
-//implement google swagger /TODO
-=======
 /**
 * @swagger
 * components:
@@ -178,7 +175,6 @@ router.post("/register", auth_controller_1.default.register);
  *               example:
  *                 message: "Bad Request"
  */
->>>>>>> ef4de4b439bd48d9cca0bf9a328caa721636c71a
 router.post("/google", auth_controller_1.default.googleSignin);
 /**
 * @swagger

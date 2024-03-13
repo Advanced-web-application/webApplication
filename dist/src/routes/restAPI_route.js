@@ -6,11 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const router = express_1.default.Router();
 const restAPI_controller_1 = __importDefault(require("../controllers/restAPI_controller"));
-<<<<<<< HEAD
-const auth_middleware_1 = __importDefault(require("../common/auth_middleware"));
-//implement SWAGGER/TODO
-router.get("/", auth_middleware_1.default, restAPI_controller_1.default.getCurrencyRate.bind(restAPI_controller_1.default));
-=======
 /**
 * @swagger
 * tags:
@@ -87,6 +82,5 @@ router.get("/", auth_middleware_1.default, restAPI_controller_1.default.getCurre
 *                 message: "Internal Server Error"
 * */
 router.get("/", restAPI_controller_1.default.getCurrencyRate.bind(restAPI_controller_1.default));
->>>>>>> ef4de4b439bd48d9cca0bf9a328caa721636c71a
 exports.default = router;
 //# sourceMappingURL=restAPI_route.js.map

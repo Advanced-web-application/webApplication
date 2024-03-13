@@ -1,11 +1,6 @@
 import express from "express";
 const router = express.Router();
 import restAPIController from "../controllers/restAPI_controller";
-<<<<<<< HEAD
-import authMiddleware from "../common/auth_middleware";
- //implement SWAGGER/TODO
-router.get("/",authMiddleware, restAPIController.getCurrencyRate.bind(restAPIController));
-=======
 
 /**
 * @swagger
@@ -90,5 +85,4 @@ router.get("/",authMiddleware, restAPIController.getCurrencyRate.bind(restAPICon
 * */
 
 router.get("/", restAPIController.getCurrencyRate.bind(restAPIController));
->>>>>>> ef4de4b439bd48d9cca0bf9a328caa721636c71a
 export default router;
