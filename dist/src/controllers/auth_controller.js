@@ -49,6 +49,7 @@ const googleSignin = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 });
 const generateTokens = (user) => __awaiter(void 0, void 0, void 0, function* () {
     const accessToken = jsonwebtoken_1.default.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRATION });
+    //console.log("process.env.JWT_EXPIRATION: ", process.env.JWT_EXPIRATION);
     const refreshToken = jsonwebtoken_1.default.sign({ _id: user._id }, process.env.JWT_REFRESH_SECRET);
     if (user.refreshTokens == null) {
         user.refreshTokens = [refreshToken];

@@ -47,6 +47,7 @@ const googleSignin = async (req: Request, res: Response) => {
 
 const generateTokens = async (user: Document & IUser) => {
     const accessToken = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRATION });
+    //console.log("process.env.JWT_EXPIRATION: ", process.env.JWT_EXPIRATION);
     const refreshToken = jwt.sign({ _id: user._id }, process.env.JWT_REFRESH_SECRET);
     if (user.refreshTokens == null) {
         user.refreshTokens = [refreshToken];
