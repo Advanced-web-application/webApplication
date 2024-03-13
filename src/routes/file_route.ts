@@ -19,6 +19,73 @@ const storage = multer.diskStorage({
 })
 const upload = multer({ storage: storage });
 
+
+
+/**
+* @swagger
+* tags:
+*   name: Files
+*   description: The Files API
+*/
+
+/**
+* @swagger
+* components:
+*   securitySchemes:
+*     bearerAuth:
+*       type: http
+*       scheme: bearer
+*       bearerFormat: JWT
+*/
+
+/**
+ * @swagger
+ * components:
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ *   schemas:
+ *     FileUploadResponse:
+ *       type: object
+ *       required:
+ *         - url
+ *       properties:
+ *         url:
+ *           type: string
+ *           description: The URL of the uploaded file
+ *       example:
+ *        url: "http://localhost:3000/public/1625760000000.jpg"
+ * */
+
+ /**
+ * @swagger
+ * /file:
+ *   post:
+ *     summary: Upload a file
+ *     tags: [Files]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               file:
+ *                 type: string
+ *                 format: binary
+ *     responses:
+ *       200:
+ *         description: The URL of the uploaded file
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/FileUploadResponse'
+ */
+
 router.post('/', upload.single("file"), function (req, res) {
     console.log("router.post(/file: " + base + req.file.path)
     res.status(200).send({ url: base + req.file.path })

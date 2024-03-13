@@ -32,7 +32,7 @@ import { Request, Response } from 'express';
 //   }
 // }
 
-class RestAPIController {
+ export class RestAPIController {
   // Add the getCurrencyRate method inside the class
   async getCurrencyRate(req: Request, res: Response) {
     const options = {
@@ -46,7 +46,8 @@ class RestAPIController {
     };
     try {
       const { data } = await axios.request(options);
-      res.send(data);
+      console.log(data);
+      res.status(200).send(data);
     } catch (error) {
       console.error(error);
       res.status(500).send('Error fetching currency rates');

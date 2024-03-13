@@ -124,7 +124,61 @@ const auth_controller_1 = __importDefault(require("../controllers/auth_controlle
 *                 message: "Request not acceptable"
 */
 router.post("/register", auth_controller_1.default.register);
+<<<<<<< HEAD
 //implement google swagger /TODO
+=======
+/**
+* @swagger
+* components:
+*   schemas:
+*     GoogleSignin:
+*       type: object
+*       required:
+*         - token
+*       properties:
+*         token:
+*           type: string
+*           description: The Google token
+*       example:
+*         token: "googleToken"
+*/
+/**
+* @swagger
+ * /Auth/google:
+ *   post:
+ *     summary: Sign in with Google
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/GoogleSignin'
+ *     responses:
+ *       200:
+ *         description: Successful sign in
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 token:
+ *                   type: string
+ *                 user:
+ *                   type: object
+ *       400:
+ *         description: Bad Request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *               example:
+ *                 message: "Bad Request"
+ */
+>>>>>>> ef4de4b439bd48d9cca0bf9a328caa721636c71a
 router.post("/google", auth_controller_1.default.googleSignin);
 /**
 * @swagger

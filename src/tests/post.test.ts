@@ -26,6 +26,7 @@ beforeAll(async () => {
   user._id = response.body._id;
   const response2 = await request(app).post("/auth/login").send(user);
   accessToken = response2.body.accessToken;
+  console.log("accessToken: " + accessToken);
 });
 
 afterAll(async () => {
@@ -59,7 +60,7 @@ describe("Post tests", () => {
   });
 
   test("Test Post post", async () => {
-    addPost(post1);
+     await addPost(post1);
   });
 
   let postId: string;

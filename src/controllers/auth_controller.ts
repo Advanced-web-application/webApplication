@@ -167,7 +167,7 @@ const refresh = async (req: Request, res: Response) => {
         }
         try {
             const userDb = await User.findOne({ '_id': user._id });
-            console.log(user._id);
+            console.log("user" +user._id);
             if (!userDb.refreshTokens || !userDb.refreshTokens.includes(refreshToken)) {
                 console.log(userDb.refreshTokens);
                 userDb.refreshTokens = [];
