@@ -69,10 +69,14 @@ const register = async (req: Request, res: Response) => {
     const id = req.body._id;
     const email = req.body.email;
     const password = req.body.password;
+    const image = req.body.image;
+    console.log("register: " + password);
+    console.log("register: " + email);
     if (!email || !password) {
         return res.status(400).send("missing email or password");
     }
-    try {
+    console.log("here");
+    try { 
         const rs = await User.findOne({ 'email': email });
         if (rs != null) {
             return res.status(406).send("email already exists");
@@ -84,6 +88,7 @@ const register = async (req: Request, res: Response) => {
         'age':age,
         'gender':gender,
         '_id':id,
+        'image': image,
         'email': email, 
         'password': encryptedPassword });
 
@@ -95,10 +100,12 @@ const register = async (req: Request, res: Response) => {
             '_id':id,
             'email': email, 
             'password': encryptedPassword,
+            'image': image,
             ...tokens
         });
     } catch (err) {
-        return res.status(400).send("error missing email or password");
+        console.log("register: " +err);
+        return res.status(400).send(err);
     }
 }
 
