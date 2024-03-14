@@ -44,6 +44,7 @@ const googleSignin = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         }
     }
     catch (err) {
+        console.log("google " + err);
         return res.status(400).send(err.message);
     }
 });
@@ -123,7 +124,7 @@ const logout = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (refreshToken == null)
         return res.sendStatus(401);
     jsonwebtoken_1.default.verify(refreshToken, process.env.JWT_REFRESH_SECRET, (err, user) => __awaiter(void 0, void 0, void 0, function* () {
-        console.log(err);
+        console.log("logout :" + err);
         if (err)
             return res.sendStatus(401);
         try {
@@ -136,24 +137,27 @@ const logout = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             else {
                 userDb.refreshTokens = userDb.refreshTokens.filter(t => t !== refreshToken);
                 yield userDb.save();
+                console.log("logout success");
                 return res.sendStatus(200);
             }
         }
         catch (err) {
+            console.log("logout2 :" + err);
             res.sendStatus(401).send(err.message);
         }
     }));
 });
 const refresh = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const authHeader = req.headers['authorization'];
+    console.log("authHeader is: " + authHeader);
     const refreshToken = authHeader && authHeader.split(' ')[1]; // Bearer <token>
-    console.log(refreshToken);
+    console.log(" refreshToken is: " + refreshToken);
     console.log(process.env.JWT_REFRESH_SECRET);
     if (refreshToken == null)
         return res.sendStatus(401);
     jsonwebtoken_1.default.verify(refreshToken, process.env.JWT_REFRESH_SECRET, (err, user) => __awaiter(void 0, void 0, void 0, function* () {
         if (err) {
-            console.log(err);
+            console.log("refrest err: " + err);
             return res.sendStatus(401);
         }
         try {
@@ -176,6 +180,7 @@ const refresh = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             });
         }
         catch (err) {
+            console.log("refrest err2: " + err);
             res.sendStatus(401).send(err.message);
         }
     }));

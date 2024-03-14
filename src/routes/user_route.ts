@@ -117,6 +117,12 @@ router.get("/:id",authMiddleware, UserController.getById.bind(UserController));
 *     tags: [User]
 *     security:
 *       - bearerAuth: []
+*     requestBody:
+*       required: true
+*       content:
+*         application/json:
+*           schema:
+*             $ref: '#/components/schemas/User'
 *     responses:
 *       200:
 *         description: Successful operation
@@ -155,6 +161,12 @@ router.post("/", authMiddleware, UserController.post.bind(UserController));
 *           type: string
 *     security:
 *       - bearerAuth: []
+*     requestBody:
+*       required: true
+*       content:
+*         application/json:
+*           schema:
+*             $ref: '#/components/schemas/User'
 *     responses:
 *       200:
 *         description: User updated
@@ -176,7 +188,7 @@ router.post("/", authMiddleware, UserController.post.bind(UserController));
 *               example:
 *                 message: "Not Acceptable"
 */
-router.put("/:id", authMiddleware, UserController.putById.bind(UserController)); // need to add authMiddleware 
+router.put("/:id", authMiddleware, UserController.putById.bind(UserController));  
 
 /**
 * @swagger

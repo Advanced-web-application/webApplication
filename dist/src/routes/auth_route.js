@@ -128,20 +128,20 @@ router.post("/register", auth_controller_1.default.register);
 * @swagger
 * components:
 *   schemas:
-*     GoogleSignin:
+*     Credential:
 *       type: object
 *       required:
-*         - token
+*         - credential
 *       properties:
-*         token:
+*         credential:
 *           type: string
 *           description: The Google token
 *       example:
-*         token: "googleToken"
+*        'eyJhbGciOiJSUzI1NiIsImtpZCI6IjA4YmY1YzM3NzJkZDRlN2E3MjdhMTAxYmY1MjBmNjU3NWNhYzMyNmYiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI4OTU2MzQyNjcwMTEtY3YybzkxMHJuY2E5OTQyM3VkM2VuMGpzMHJhaWRmbGguYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI4OTU2MzQyNjcwMTEtY3YybzkxMHJuY2E5OTQyM3VkM2VuMGpzMHJhaWRmbGguYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMTgwNjA3Njg0ODYyMDg5MjMzMjgiLCJlbWFpbCI6Im1pY2hhbHN0dWRpZXMwQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYmYiOjE3MTA0MTA3MzksIm5hbWUiOiJtaWNoYWwgc3R1ZGllcyIsInBpY3R1cmUiOiJodHRwczovL2xoMy5nb29nbGV1c2VyY29udGVudC5jb20vYS9BQ2c4b2NKbUVpWVRLbDhVbTdxNXl1ZHQ1QUVwSmpjTEx3U3pub29OSVVSeWRQZlM9czk2LWMiLCJnaXZlbl9uYW1lIjoibWljaGFsIiwiZmFtaWx5X25hbWUiOiJzdHVkaWVzIiwibG9jYWxlIjoiZW4iLCJpYXQiOjE3MTA0MTEwMzksImV4cCI6MTcxMDQxNDYzOSwianRpIjoiOTY3MTFhNmYwYjJkZjE3M2E3N2NhM2M2ZjA5Y2I4MzcyM2JlMWY1NSJ9.WwgP0UOuTbWv_Xz6CbElD5oyM1J_8WKJXyJXh4VTtBksV_itiqK8JbVsJKgoqDPlU3DSDR5WSr4Xpjb_iPKIpeTqh1OXXpL1xFNc-Ht3TOyLRc3MO5oAe_qimObrB-naE1zNzZfoydcDV1XHZiJ39TmGQmbOwtTvRbn35k9gMLfPzm6XPFy6LL3yY1LXKXVOpKsiPbpWWJmZOizwUDkSHqPcwDXrEEMUrvG7T3dKL6mK5z0Xz7sEvdjsFv_VngCUDzsl4Wos09amIdfc9UC8D8ulPH5WjHstBl_TFh8B-9e7XNJImmaE3oDaL5sWmw64f1YOJnS50vQYDfvMPkJjPw'
 */
 /**
 * @swagger
- * /Auth/google:
+ * /auth/google:
  *   post:
  *     summary: Sign in with Google
  *     tags: [Auth]
@@ -150,7 +150,10 @@ router.post("/register", auth_controller_1.default.register);
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/GoogleSignin'
+ *             type: object
+ *             properties:
+ *               credential:
+ *                 $ref: '#/components/schemas/Credential'
  *     responses:
  *       200:
  *         description: Successful sign in
@@ -207,7 +210,7 @@ router.post("/google", auth_controller_1.default.googleSignin);
 *       content:
 *         application/json:
 *           schema:
-*             $ref: '#/components/schemas/Tokens'
+*             $ref: '#/components/schemas/User'
 *     responses:
 *       200:
 *         description: Successfully logged in
@@ -245,6 +248,13 @@ router.post("/login", auth_controller_1.default.login);
 *   get:
 *     summary: Logout a user
 *     tags: [Auth]
+*     parameters:
+*       - in: header
+*         name: Authorization
+*         schema:
+*           type: string
+*         required: true
+*         description: Bearer token for authorization which is the refresh token
 *     responses:
 *       200:
 *         description: Successfully logged out
@@ -279,6 +289,13 @@ router.get("/logout", auth_controller_1.default.logout);
 *     description: Need to provide the refresh token in the auth header
 *     security:
 *       - bearerAuth: []
+*     parameters:
+*       - in: header
+*         name: Authorization
+*         schema:
+*           type: string
+*         required: true
+*         description: Bearer token for authorization which is the refresh token
 *     responses:
 *       200:
 *         description: The access & refresh tokens
