@@ -250,7 +250,7 @@ router.post("/login", auth_controller_1.default.login);
 *     tags: [Auth]
 *     parameters:
 *       - in: header
-*         name: Authorization
+*         name: security
 *         schema:
 *           type: string
 *         required: true
@@ -287,8 +287,6 @@ router.get("/logout", auth_controller_1.default.logout);
 *     summary: Get a new access token using the refresh token
 *     tags: [Auth]
 *     description: Need to provide the refresh token in the auth header
-*     security:
-*       - bearerAuth: []
 *     parameters:
 *       - in: header
 *         name: Authorization

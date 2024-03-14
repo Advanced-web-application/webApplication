@@ -258,7 +258,7 @@ router.post("/login", authController.login);
 *     tags: [Auth]
 *     parameters:
 *       - in: header
-*         name: Authorization
+*         name: security
 *         schema:
 *           type: string
 *         required: true
