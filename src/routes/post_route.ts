@@ -131,6 +131,12 @@ router.get("/:id", PostController.getById.bind(PostController));
 *     tags: [Post]
 *     security:
 *       - bearerAuth: []
+*     requestBody:
+*       required: true
+*       content:
+*         application/json:
+*           schema:
+*             $ref: '#/components/schemas/Post'
 *     responses:
 *       201:
 *         description: Post created
@@ -177,6 +183,12 @@ router.post("/", authMiddleware, PostController.post.bind(PostController));
 *           type: string
 *     security:
 *       - bearerAuth: []
+*     requestBody:
+*       required: true
+*       content:
+*         application/json:
+*           schema:
+*             $ref: '#/components/schemas/Post'
 *     responses:
 *       200:
 *         description: Post updated
@@ -239,8 +251,25 @@ router.put("/:id", authMiddleware, PostController.putById.bind(PostController));
 router.delete("/:id", authMiddleware, PostController.deleteById.bind(PostController));
 
 /**
+* @swagger
+* components:
+*   schemas:
+*     Comment:
+*       type: object
+*       required:
+*         - comments
+*       properties:
+*         comment:
+*           type: string
+*           description: The comment.
+*       example:
+*         comment: "This is a comment"
+*/ 
+
+
+/**
  * @swagger
- * /comment/{id}:
+ * /post/comment/{id}:
  *   put:
  *     summary: Add a comment to a post
  *     tags: [Post]
@@ -252,6 +281,12 @@ router.delete("/:id", authMiddleware, PostController.deleteById.bind(PostControl
  *           type: string
  *     security:
  *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Comment'
  *     responses:
  *       200:
  *         description: The updated post

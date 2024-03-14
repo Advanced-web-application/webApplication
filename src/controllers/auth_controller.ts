@@ -40,6 +40,7 @@ const googleSignin = async (req: Request, res: Response) => {
                 })
         }
     } catch (err) {
+        console.log("google " +err);
         return res.status(400).send(err.message);
     }
 
@@ -136,7 +137,7 @@ const logout = async (req: Request, res: Response) => {
     const refreshToken = authHeader && authHeader.split(' ')[1]; // Bearer <token>
     if (refreshToken == null) return res.sendStatus(401);
     jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET, async (err, user: { '_id': string }) => {
-        console.log(err);
+        console.log( "logout :" + err);
         if (err) return res.sendStatus(401);
         try {
             const userDb = await User.findOne({ '_id': user._id });
@@ -147,9 +148,11 @@ const logout = async (req: Request, res: Response) => {
             } else {
                 userDb.refreshTokens = userDb.refreshTokens.filter(t => t !== refreshToken);
                 await userDb.save();
+                console.log("logout success");
                 return res.sendStatus(200);
             }
         } catch (err) {
+            console.log( "logout2 :" + err);
             res.sendStatus(401).send(err.message);
         }
     });
@@ -157,13 +160,14 @@ const logout = async (req: Request, res: Response) => {
 
 const refresh = async (req: Request, res: Response) => {
     const authHeader = req.headers['authorization'];
+    console.log("authHeader is: "+ authHeader);
     const refreshToken = authHeader && authHeader.split(' ')[1]; // Bearer <token>
-    console.log(refreshToken);
+    console.log(" refreshToken is: "+ refreshToken);
     console.log(process.env.JWT_REFRESH_SECRET);
     if (refreshToken == null) return res.sendStatus(401);
     jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET, async (err, user: { '_id': string }) => {
         if (err) {
-            console.log(err);
+            console.log("refrest err: " +err);
             return res.sendStatus(401);
         }
         try {
@@ -185,6 +189,7 @@ const refresh = async (req: Request, res: Response) => {
                 'refreshToken': newRefreshToken
             });
         } catch (err) {
+            console.log("refrest err2: " +err);
             res.sendStatus(401).send(err.message);
         }
     });
