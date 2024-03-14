@@ -11,13 +11,13 @@ export class BaseController<ModelType>{
     async get(req: Request, res: Response) {
         console.log("getAll");
         try {
-            if (req.query.name) {
-                const students = await this.model.find({ name: req.query.name });
-                res.send(students);
-            } else {
+            //if (req.query.name) {
+               // const students = await this.model.find({ name: req.query.name });
+               // res.send(students);
+           //} else {
                 const students = await this.model.find();
                 res.send(students);
-            }
+            //}
         } catch (err) {
             res.status(406).json({ message: err.message });
         }

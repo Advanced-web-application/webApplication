@@ -18,14 +18,13 @@ class BaseController {
         return __awaiter(this, void 0, void 0, function* () {
             console.log("getAll");
             try {
-                if (req.query.name) {
-                    const students = yield this.model.find({ name: req.query.name });
-                    res.send(students);
-                }
-                else {
-                    const students = yield this.model.find();
-                    res.send(students);
-                }
+                //if (req.query.name) {
+                // const students = await this.model.find({ name: req.query.name });
+                // res.send(students);
+                //} else {
+                const students = yield this.model.find();
+                res.send(students);
+                //}
             }
             catch (err) {
                 res.status(406).json({ message: err.message });

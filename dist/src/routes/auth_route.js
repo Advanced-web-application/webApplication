@@ -287,6 +287,8 @@ router.get("/logout", auth_controller_1.default.logout);
 *     summary: Get a new access token using the refresh token
 *     tags: [Auth]
 *     description: Need to provide the refresh token in the auth header
+*     security:
+*       - bearerAuth: []
 *     parameters:
 *       - in: header
 *         name: Authorization
