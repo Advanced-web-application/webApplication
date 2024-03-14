@@ -16,16 +16,26 @@ const supertest_1 = __importDefault(require("supertest"));
 const app_1 = __importDefault(require("../app"));
 const mongoose_1 = __importDefault(require("mongoose"));
 let app;
+let server;
 beforeAll(() => __awaiter(void 0, void 0, void 0, function* () {
     app = yield (0, app_1.default)();
     console.log("beforeAll");
+    server = app.listen();
 }));
 afterAll(() => __awaiter(void 0, void 0, void 0, function* () {
     yield mongoose_1.default.connection.close();
+    return new Promise((resolve, reject) => {
+        server.close((err) => {
+            if (err) {
+                return reject(err);
+            }
+            resolve();
+        });
+    });
 }));
 describe("Rest API tests", () => {
     test("Test Get Rest API", () => __awaiter(void 0, void 0, void 0, function* () {
-        const response = yield (0, supertest_1.default)(app).get("/restAPI");
+        const response = yield (0, supertest_1.default)(server).get("/restAPI");
         expect(response.statusCode).toBe(200);
     }));
 });
