@@ -2,23 +2,34 @@ import request from "supertest";
 import initApp from "../app";
 import mongoose from "mongoose";
 import { Express } from "express";
+import { Server, IncomingMessage, ServerResponse } from "http";
 
 let app: Express;
+let server;
 
 beforeAll(async () => {
   app = await initApp();
   console.log("beforeAll");
+  server= app.listen();
 
 });
 
 afterAll(async () => {
   await mongoose.connection.close();
+  return new Promise<void>((resolve, reject) => {
+    server.close((err) => {
+      if (err) {
+        return reject(err);
+      }
+      resolve();
+    });
+  });
 });
 
 
 describe("Rest API tests", () => {
   test("Test Get Rest API", async () => {
-    const response = await request(app).get("/restAPI")
+    const response = await request(server).get("/restAPI")
     expect(response.statusCode).toBe(200);
   });
 
