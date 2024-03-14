@@ -71,8 +71,17 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.body._id;
     const email = req.body.email;
     const password = req.body.password;
+    const image = req.body.image;
+    console.log("register: " + password);
+    console.log("register: " + email);
     if (!email || !password) {
         return res.status(400).send("missing email or password");
+    }
+    console.log("here");
+    const ID = yield user_model_1.default.findOne({ 'id': id });
+    if (ID != null) {
+        console.log("ID already exists");
+        return res.status(406).send("ID already exists");
     }
     try {
         const rs = yield user_model_1.default.findOne({ 'email': email });
@@ -86,14 +95,16 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             'age': age,
             'gender': gender,
             '_id': id,
+            'image': image,
             'email': email,
             'password': encryptedPassword
         });
         const tokens = yield generateTokens(rs2);
-        return res.status(201).send(Object.assign({ 'fullName': fullName, 'age': age, 'gender': gender, '_id': id, 'email': email, 'password': encryptedPassword }, tokens));
+        return res.status(201).send(Object.assign({ 'fullName': fullName, 'age': age, 'gender': gender, '_id': id, 'email': email, 'password': encryptedPassword, 'image': image }, tokens));
     }
     catch (err) {
-        return res.status(400).send("error missing email or password");
+        console.log("register: " + err);
+        return res.status(400).send(err);
     }
 });
 const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
