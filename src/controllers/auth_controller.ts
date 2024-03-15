@@ -8,13 +8,14 @@ import { Document } from 'mongoose';
 
 const client = new OAuth2Client();
 const googleSignin = async (req: Request, res: Response) => {
-    console.log(req.body);
+    console.log( "cradentiasle:" + req.body.credential);
     try {
         const ticket = await client.verifyIdToken({
             idToken: req.body.credential,
             audience: process.env.GOOGLE_CLIENT_ID,
         });
         const payload = ticket.getPayload();
+        
         const email = payload?.email;
         if (email != null) {
             let user = await User.findOne({ 'email': email });
@@ -36,7 +37,7 @@ const googleSignin = async (req: Request, res: Response) => {
                     email: user.email,
                     _id: user._id,
                     image: user.image,
-                    ...tokens
+                    ...tokens,
                 })
         }
     } catch (err) {
@@ -207,5 +208,6 @@ export default {
     register,
     login,
     logout,
-    refresh
+    refresh,
+    generateTokens
 }
