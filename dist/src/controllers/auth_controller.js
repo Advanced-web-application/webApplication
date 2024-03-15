@@ -78,11 +78,6 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         return res.status(400).send("missing email or password");
     }
     console.log("here");
-    const ID = yield user_model_1.default.findOne({ 'id': id });
-    if (ID != null) {
-        console.log("ID already exists");
-        return res.status(406).send("ID already exists");
-    }
     try {
         const rs = yield user_model_1.default.findOne({ 'email': email });
         if (rs != null) {

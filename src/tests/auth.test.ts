@@ -73,6 +73,53 @@ describe("Auth tests", () => {
     expect(response.statusCode).toBe(400);
   });
 
+  test("Test Register missing email", async () => {
+    const response = await request(app)
+      .post("/auth/register").send({
+        password: "123456789",
+      });
+
+    expect(response.statusCode).toBe(400);
+  });
+
+  test("Test Register missing email and password", async () => {
+    const response = await request(app)
+      .post("/auth/register").send({});
+    expect(response.statusCode).toBe(400);
+  });
+
+  test("Test Login with Incorrect Credentials", async () => {
+    const response = await request(app)
+      .post("/auth/login")
+      .send({ email: "test@test.com", password: "wrong_password" });
+    expect(response.statusCode).toBe(401);
+  });
+
+
+  test("Test Register with Missing Fields", async () => {
+    const response = await request(app)
+      .post("/auth/register")
+      .send({});
+    expect(response.statusCode).toBe(400);
+});
+
+test("Test Register with Existing Email", async () => {
+    const response = await request(app)
+      .post("/auth/register")
+      .send(user); 
+    expect(response.statusCode).toBe(406);
+});
+
+test("Test Register Server Error", async () => {
+    jest.spyOn(User, "create").mockRejectedValue(new Error("Server error"));
+    
+    const response = await request(app)
+      .post("/auth/register")
+      .send(user);
+    expect(response.statusCode).toBe(400);
+});
+
+
   test("Test Login", async () => {
     const response = await request(app)
       .post("/auth/login").send(user);
@@ -107,6 +154,30 @@ describe("Auth tests", () => {
     expect(response.statusCode).toBe(400);
 
   });
+
+  test("Test Login with Missing Fields", async () => {
+    const response = await request(app)
+      .post("/auth/login")
+      .send({});
+    expect(response.statusCode).toBe(400);
+});
+
+test("Test Login with Incorrect Credentials", async () => {
+    const response = await request(app)
+      .post("/auth/login")
+      .send({ email: "test@test.com", password: "wrong_password" });
+    expect(response.statusCode).toBe(401);
+});
+
+test("Test Login Server Error", async () => {
+    jest.spyOn(User, "findOne").mockRejectedValue(new Error("Server error"));
+    
+    const response = await request(app)
+      .post("/auth/login")
+      .send(user);
+    expect(response.statusCode).toBe(400);
+});
+
 
   test("Test forbidden access without token", async () => {
     const response = await request(app).get("/user");
@@ -192,6 +263,18 @@ describe("Auth tests", () => {
     expect(LogOutrefreshToken).toBeDefined();
   });
 
+  test("Test Logout without Token", async () => {
+    const response = await request(app).get("/auth/logout");
+    expect(response.statusCode).toBe(401);
+  });
+
+  test("Test Logout with Invalid Token", async () => {
+    const response = await request(app)
+      .get("/auth/logout")
+      .set("Authorization", "JWT invalid_token");
+    expect(response.statusCode).toBe(401);
+  });
+
 
   test("Test logout", async () => {
     const response = await request(app)
@@ -209,19 +292,6 @@ describe("Auth tests", () => {
       .send();
     expect(response.statusCode).not.toBe(200);
   });
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 });

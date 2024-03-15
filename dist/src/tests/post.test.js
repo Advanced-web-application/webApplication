@@ -1,4 +1,10 @@
 "use strict";
+// import { Express } from "express";
+// import request from "supertest";
+// import initApp from "../app";
+// import mongoose from "mongoose";
+// import Post, { IPost } from "../models/post_model";
+// import User, { IUser } from "../models/user_model";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -31,7 +37,7 @@ beforeAll(() => __awaiter(void 0, void 0, void 0, function* () {
     app = yield (0, app_1.default)();
     console.log("beforeAll");
     yield post_model_1.default.deleteMany();
-    yield user_model_1.default.deleteMany({ 'email': user.email });
+    yield user_model_1.default.deleteMany({ email: user.email });
     const response = yield (0, supertest_1.default)(app).post("/auth/register").send(user);
     user._id = response.body._id;
     const response2 = yield (0, supertest_1.default)(app).post("/auth/login").send(user);
@@ -127,6 +133,31 @@ describe("Post tests", () => {
             .send({ comment: "test comment" });
         expect(response.statusCode).toBe(200);
         expect(response.body.comments[0]).toBe("test comment");
+    }));
+    // Add test to cover PostController's error handling
+    test("Test Add Comment with non-existent post ID /put/comment", () => __awaiter(void 0, void 0, void 0, function* () {
+        const response = yield (0, supertest_1.default)(app)
+            .put("/post/comment/nonexistentId")
+            .set("Authorization", "JWT " + accessToken)
+            .send({ comment: "test comment" });
+        expect(response.statusCode).toBe(404);
+        expect(response.text).toBe("Post not found");
+    }));
+    // Add test to cover PostController's error handling
+    test("Test Add Comment with server error /put/comment", () => __awaiter(void 0, void 0, void 0, function* () {
+        const response = yield (0, supertest_1.default)(app)
+            .put("/post/comment/" + postId) // Assuming postId is valid
+            .set("Authorization", "InvalidToken") // Intentionally set invalid token
+            .send({ comment: "test comment" });
+        expect(response.statusCode).toBe(500);
+        expect(response.text).toContain("fail:");
+    }));
+    // Test 404 HTTP error when post is not found
+    test("Test Post not found error /post/:id", () => __awaiter(void 0, void 0, void 0, function* () {
+        const response = yield (0, supertest_1.default)(app)
+            .get("/post/nonexistentId"); // Non-existent post ID
+        expect(response.statusCode).toBe(404);
+        expect(response.text).toBe("Post not found");
     }));
 });
 //# sourceMappingURL=post.test.js.map
