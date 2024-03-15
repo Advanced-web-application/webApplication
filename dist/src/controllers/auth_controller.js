@@ -18,7 +18,7 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const google_auth_library_1 = require("google-auth-library");
 const client = new google_auth_library_1.OAuth2Client();
 const googleSignin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(req.body);
+    console.log("cradentiasle:" + req.body.credential);
     try {
         const ticket = yield client.verifyIdToken({
             idToken: req.body.credential,
@@ -78,11 +78,6 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         return res.status(400).send("missing email or password");
     }
     console.log("here");
-    const ID = yield user_model_1.default.findOne({ 'id': id });
-    if (ID != null) {
-        console.log("ID already exists");
-        return res.status(406).send("ID already exists");
-    }
     try {
         const rs = yield user_model_1.default.findOne({ 'email': email });
         if (rs != null) {
@@ -201,6 +196,7 @@ exports.default = {
     register,
     login,
     logout,
-    refresh
+    refresh,
+    generateTokens
 };
 //# sourceMappingURL=auth_controller.js.map
