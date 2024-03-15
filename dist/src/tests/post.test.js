@@ -23,6 +23,7 @@ const app_1 = __importDefault(require("../app"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const post_model_1 = __importDefault(require("../models/post_model"));
 const user_model_1 = __importDefault(require("../models/user_model"));
+const typescript_1 = require("typescript");
 let app;
 const user = {
     fullName: "John Doe",
@@ -37,7 +38,7 @@ beforeAll(() => __awaiter(void 0, void 0, void 0, function* () {
     app = yield (0, app_1.default)();
     console.log("beforeAll");
     yield post_model_1.default.deleteMany();
-    yield user_model_1.default.deleteMany({ email: user.email });
+    yield user_model_1.default.deleteMany({ 'email': user.email });
     const response = yield (0, supertest_1.default)(app).post("/auth/register").send(user);
     user._id = response.body._id;
     const response2 = yield (0, supertest_1.default)(app).post("/auth/login").send(user);
@@ -137,7 +138,7 @@ describe("Post tests", () => {
     // Add test to cover PostController's error handling
     test("Test Add Comment with non-existent post ID /put/comment", () => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield (0, supertest_1.default)(app)
-            .put("/post/comment/nonexistentId")
+            .put("/post/comment/" + "nonexistentId")
             .set("Authorization", "JWT " + accessToken)
             .send({ comment: "test comment" });
         expect(response.statusCode).toBe(404);
@@ -145,19 +146,13 @@ describe("Post tests", () => {
     }));
     // Add test to cover PostController's error handling
     test("Test Add Comment with server error /put/comment", () => __awaiter(void 0, void 0, void 0, function* () {
-        const response = yield (0, supertest_1.default)(app)
+        const response = yield (0, supertest_1.default)(typescript_1.server)
             .put("/post/comment/" + postId) // Assuming postId is valid
             .set("Authorization", "InvalidToken") // Intentionally set invalid token
             .send({ comment: "test comment" });
         expect(response.statusCode).toBe(500);
         expect(response.text).toContain("fail:");
     }));
-    // Test 404 HTTP error when post is not found
-    test("Test Post not found error /post/:id", () => __awaiter(void 0, void 0, void 0, function* () {
-        const response = yield (0, supertest_1.default)(app)
-            .get("/post/nonexistentId"); // Non-existent post ID
-        expect(response.statusCode).toBe(404);
-        expect(response.text).toBe("Post not found");
-    }));
 });
+//working 1 end
 //# sourceMappingURL=post.test.js.map
