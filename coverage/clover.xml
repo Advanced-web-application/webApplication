@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
 <coverage generated="1710533912758" clover="3.2.0">
   <project timestamp="1710533912759" name="All files">
     <metrics statements="277" coveredstatements="241" conditionals="54" coveredconditionals="38" methods="40" coveredmethods="37" elements="371" coveredelements="316" complexity="0" loc="277" ncloc="277" packages="5" files="14" classes="14"/>
+=======
+<coverage generated="1710533082973" clover="3.2.0">
+  <project timestamp="1710533082973" name="All files">
+    <metrics statements="277" coveredstatements="255" conditionals="54" coveredconditionals="42" methods="40" coveredmethods="39" elements="371" coveredelements="336" complexity="0" loc="277" ncloc="277" packages="5" files="14" classes="14"/>
+>>>>>>> 13509abdb95530da5fc5ae0500406dec6d5297b3
     <package name="src">
       <metrics statements="34" coveredstatements="34" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="5"/>
       <file name="app.ts" path="C:\Users\shayd\OneDrive - The College of Management Academic Studies\Desktop\מדעי המחשב\thirdyear\eliav_backend\webApplication\src\app.ts">
