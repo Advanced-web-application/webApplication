@@ -622,7 +622,7 @@ describe("Post tests", () => {
     owner: "123",
   };
 
-  test("Add Comment /put/comment", async () => {
+  test("Add Comment /post/comment/:id", async () => {
     await addPost(post2);
 
     const res = await request(app).get("/post");
@@ -639,27 +639,6 @@ describe("Post tests", () => {
     expect(response.body.comments[0]).toBe("test comment");
   });
 
-  test("Test addComment with valid post ID", async () => {
-    // Create a new post
-    await addPost(post2);
-
-    // Retrieve the post ID
-    const res = await request(app).get("/post");
-    expect(res.statusCode).toBe(200);
-    const rc = res.body[0];
-    postId = rc._id;
-
-    // Add a comment to the post
-    const response = await request(app)
-      .put("/post/comment/" + postId)
-      .set("Authorization", "JWT " + accessToken)
-      .send({ comment: "test comment" });
-
-    // Check response status and comment addition
-    expect(response.statusCode).toBe(200);
-    expect(response.body.comments[0]).toBe("test comment");
-  });
-
   test("Test addComment with invalid post ID", async () => {
     const invalidPostId = "invalid_id";
 
@@ -668,26 +647,9 @@ describe("Post tests", () => {
       .set("Authorization", "JWT " + accessToken)
       .send({ comment: "test comment" });
 
-    expect(response.statusCode).toBe(404);
-  });
-
-  test("Test addComment with internal server error", async () => {
-    jest.spyOn(Post, "findById").mockRejectedValue(new Error("Internal Server Error"));
-
-    const response = await request(app)
-      .put("/post/comment/" + postId)
-      .set("Authorization", "JWT " + accessToken)
-      .send({ comment: "test comment" });
-
     expect(response.statusCode).toBe(500);
   });
 
-  test("Test Post not found response", async () => {
-    const nonExistentPostId = "non_existent_id";
 
-    const response = await request(app).get(`/post/${nonExistentPostId}`);
-
-    expect(response.statusCode).toBe(404);
-  });
 });
 

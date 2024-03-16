@@ -3,6 +3,9 @@ const router = express.Router();
 import PostController from "../controllers/post_controller";
 import authMiddleware from "../common/auth_middleware";
 import Post from "../models/post_model";
+import mongoose from "mongoose";
+import app from "../app";
+import { CastError } from 'mongoose';
 
 /**
 * @swagger
@@ -316,21 +319,6 @@ router.delete("/:id", authMiddleware, PostController.deleteById.bind(PostControl
  */
 
 router.put("/comment/:id", authMiddleware, PostController.addComment.bind(PostController));
-
-
-
-router.get('/post/:id' , async (req, res) => {
-    try{
-        const post = await Post.findById(req.params.id);
-       if(!post){
-           res.status(404).send("Post not found");
-           return;
-       }
-       res.send(post);
-    } catch (err) {
-        res.status(500).send(err);
-    }
-});
 
 
 export default router;
