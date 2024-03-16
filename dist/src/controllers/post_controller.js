@@ -34,7 +34,12 @@ class PostController extends base_controller_1.BaseController {
         return __awaiter(this, void 0, void 0, function* () {
             console.log("addComment:" + req.body);
             try {
-                const post = yield this.model.findById(req.params.id);
+                const postId = req.params.id;
+                const post = yield post_model_1.default.findById(postId);
+                if (!post) {
+                    res.status(404).send("Post not found");
+                    return;
+                }
                 if (post) {
                     (_a = post.comments) === null || _a === void 0 ? void 0 : _a.push(req.body.comment);
                     yield post.save();
@@ -45,7 +50,7 @@ class PostController extends base_controller_1.BaseController {
                 }
             }
             catch (err) {
-                res.status(500).send("fail: " + err.message);
+                res.status(500).send(err);
             }
         });
     }

@@ -18,7 +18,13 @@ class PostController extends BaseController<IPost>{
     async addComment(req: AuthResquest, res: Response) {
         console.log("addComment:" + req.body);
         try {
-            const post = await this.model.findById(req.params.id);
+            const postId = req.params.id;
+            const post = await Post.findById(postId);
+            if(!post)
+            {
+                res.status(404).send("Post not found");
+                return;
+            }
             if (post) {
                 post.comments?.push(req.body.comment);
                 await post.save();
@@ -27,7 +33,7 @@ class PostController extends BaseController<IPost>{
                 res.status(404).send("Post not found");
             }
         } catch (err) {
-            res.status(500).send("fail: " + err.message);
+            res.status(500).send(err);
         }
 
     }
