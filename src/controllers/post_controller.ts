@@ -15,6 +15,7 @@ class PostController extends BaseController<IPost>{
         super.post(req, res);
     }
 
+
     async addComment(req: AuthResquest, res: Response) {
         console.log("addComment:" + req.body);
         try {
@@ -23,15 +24,12 @@ class PostController extends BaseController<IPost>{
                 post.comments?.push(req.body.comment);
                 await post.save();
                 res.status(200).send(post);
-            } else {
-                res.status(404).send("Post not found");
-            }
+             } 
         } catch (err) {
             res.status(500).send("fail: " + err.message);
         }
 
     }
-
 
 }
 

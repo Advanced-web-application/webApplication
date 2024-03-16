@@ -1,4 +1,10 @@
 "use strict";
+// import { Express } from "express";
+// import request from "supertest";
+// import initApp from "../app";
+// import mongoose from "mongoose";
+// import Post, { IPost } from "../models/post_model";
+// import User, { IUser } from "../models/user_model";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -31,7 +37,7 @@ beforeAll(() => __awaiter(void 0, void 0, void 0, function* () {
     app = yield (0, app_1.default)();
     console.log("beforeAll");
     yield post_model_1.default.deleteMany();
-    yield user_model_1.default.deleteMany({ 'email': user.email });
+    yield user_model_1.default.deleteMany({ email: user.email });
     const response = yield (0, supertest_1.default)(app).post("/auth/register").send(user);
     user._id = response.body._id;
     const response2 = yield (0, supertest_1.default)(app).post("/auth/login").send(user);
@@ -97,15 +103,11 @@ describe("Post tests", () => {
         expect(response.statusCode).toBe(406);
     }));
     test("Test DELETE with wrong id /post/:id", () => __awaiter(void 0, void 0, void 0, function* () {
-        const response = yield (0, supertest_1.default)(app)
-            .delete(`/post/"123"`)
-            .set("Authorization", "JWT " + accessToken);
+        const response = yield (0, supertest_1.default)(app).delete(`/post/"123"`).set("Authorization", "JWT " + accessToken);
         expect(response.statusCode).toBe(406);
     }));
     test("Test DELETE /post/:id", () => __awaiter(void 0, void 0, void 0, function* () {
-        const response = yield (0, supertest_1.default)(app)
-            .delete(`/post/${postId}`)
-            .set("Authorization", "JWT " + accessToken);
+        const response = yield (0, supertest_1.default)(app).delete(`/post/${postId}`).set("Authorization", "JWT " + accessToken);
         expect(response.statusCode).toBe(200);
     }));
     const post2 = {
@@ -114,8 +116,8 @@ describe("Post tests", () => {
         price: 100,
         owner: "123",
     };
-    test("Add Comment /put/comment", () => __awaiter(void 0, void 0, void 0, function* () {
-        addPost(post2);
+    test("Add Comment /post/comment/:id", () => __awaiter(void 0, void 0, void 0, function* () {
+        yield addPost(post2);
         const res = yield (0, supertest_1.default)(app).get("/post");
         expect(res.statusCode).toBe(200);
         const rc = res.body[0];
@@ -127,6 +129,14 @@ describe("Post tests", () => {
             .send({ comment: "test comment" });
         expect(response.statusCode).toBe(200);
         expect(response.body.comments[0]).toBe("test comment");
+    }));
+    test("Test addComment with invalid post ID", () => __awaiter(void 0, void 0, void 0, function* () {
+        const invalidPostId = "invalid_id";
+        const response = yield (0, supertest_1.default)(app)
+            .put("/post/comment/" + invalidPostId)
+            .set("Authorization", "JWT " + accessToken)
+            .send({ comment: "test comment" });
+        expect(response.statusCode).toBe(500);
     }));
 });
 //# sourceMappingURL=post.test.js.map

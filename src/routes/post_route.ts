@@ -2,6 +2,10 @@ import express from "express";
 const router = express.Router();
 import PostController from "../controllers/post_controller";
 import authMiddleware from "../common/auth_middleware";
+import Post from "../models/post_model";
+import mongoose from "mongoose";
+import app from "../app";
+import { CastError } from 'mongoose';
 
 /**
 * @swagger
@@ -315,6 +319,7 @@ router.delete("/:id", authMiddleware, PostController.deleteById.bind(PostControl
  */
 
 router.put("/comment/:id", authMiddleware, PostController.addComment.bind(PostController));
+
 
 export default router;
 
