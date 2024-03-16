@@ -138,18 +138,5 @@ describe("Post tests", () => {
             .send({ comment: "test comment" });
         expect(response.statusCode).toBe(500);
     }));
-    // test("Test addComment with internal server error", async () => {
-    //   jest.spyOn(Post, "findById").mockRejectedValue(new Error("Internal Server Error"));
-    //   const response = await request(app)
-    //     .put("/post/comment/" + postId)
-    //     .set("Authorization", "JWT " + accessToken)
-    //     .send({ comment: "test comment" });
-    //   expect(response.statusCode).toBe(500);
-    // });
-    // test("Test Post not found response", async () => {
-    //   const nonExistentPostId = "non_existent_id";
-    //   const response = await request(app).get(`/post/${nonExistentPostId}`);
-    //   expect(response.statusCode).toBe(404);
-    // });
 });
 //# sourceMappingURL=post.test.js.map

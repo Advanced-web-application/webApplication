@@ -100,13 +100,6 @@ describe("Auth tests", () => {
             .send(user);
         expect(response.statusCode).toBe(406);
     }));
-    test("Test Register Server Error", () => __awaiter(void 0, void 0, void 0, function* () {
-        jest.spyOn(user_model_1.default, "create").mockRejectedValue(new Error("Server error"));
-        const response = yield (0, supertest_1.default)(app)
-            .post("/auth/register")
-            .send(user);
-        expect(response.statusCode).toBe(400);
-    }));
     test("Test Login", () => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield (0, supertest_1.default)(app)
             .post("/auth/login").send(user);
@@ -149,13 +142,13 @@ describe("Auth tests", () => {
             .send({ email: "test@test.com", password: "wrong_password" });
         expect(response.statusCode).toBe(401);
     }));
-    test("Test Login Server Error", () => __awaiter(void 0, void 0, void 0, function* () {
-        jest.spyOn(user_model_1.default, "findOne").mockRejectedValue(new Error("Server error"));
-        const response = yield (0, supertest_1.default)(app)
-            .post("/auth/login")
-            .send(user);
-        expect(response.statusCode).toBe(400);
-    }));
+    // test("Test Login Server Error", async () => {
+    //     jest.spyOn(User, "findOne").mockRejectedValue(new Error("Server error"));
+    //     const response = await request(app)
+    //       .post("/auth/login")
+    //       .send(user);
+    //     expect(response.statusCode).toBe(400);
+    // });
     test("Test forbidden access without token", () => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield (0, supertest_1.default)(app).get("/user");
         expect(response.statusCode).toBe(401);

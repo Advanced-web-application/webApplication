@@ -29,28 +29,6 @@ class PostController extends base_controller_1.BaseController {
             _super.post.call(this, req, res);
         });
     }
-    // async addComment(req: AuthResquest, res: Response) {
-    //     console.log("addComment:" + req.body);
-    //     try {
-    //         const postId = req.params.id;
-    //         const post = await Post.findById(postId);
-    //         if(!post)
-    //         {
-    //             res.status(404).send("Post not found");
-    //             return;
-    //         }
-    //         if (post) {
-    //             post.comments?.push(req.body.comment);
-    //             await post.save();
-    //             res.status(200).send(post);
-    //          }
-    //         // else {
-    //         //    // res.status(404).send("Post not found");
-    //         // }
-    //     } catch (err) {
-    //         res.status(500).send(err);
-    //     }
-    // }
     addComment(req, res) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
@@ -62,9 +40,6 @@ class PostController extends base_controller_1.BaseController {
                     yield post.save();
                     res.status(200).send(post);
                 }
-                //else {
-                //     res.status(404).send("Post not found");
-                // }
             }
             catch (err) {
                 res.status(500).send("fail: " + err.message);
