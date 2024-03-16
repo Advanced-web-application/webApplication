@@ -58,6 +58,11 @@ describe("Google test", () => {
 
     // Assert response status code and body
     expect(response.status).toBe(200);
+    expect(response.body.email).toBe(mockGoogleUser.email);
+    expect(response.body._id).toBe(mockGoogleUser._id);
+    expect(response.body.accessToken).toBeDefined();
+    expect(response.body.refreshToken).toBeDefined();
+ 
 
     // Assert database interactions
     expect(User.findOne).toHaveBeenCalledWith({ email: mockGoogleUser.email });
