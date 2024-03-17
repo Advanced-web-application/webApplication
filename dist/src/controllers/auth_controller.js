@@ -168,6 +168,10 @@ const refresh = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
         try {
             const userDb = yield user_model_1.default.findOne({ '_id': user._id });
+            if (!userDb) {
+                console.log('User not found');
+                return res.sendStatus(401);
+            }
             console.log("user" + user._id);
             if (!userDb.refreshTokens || !userDb.refreshTokens.includes(refreshToken)) {
                 console.log(userDb.refreshTokens);
