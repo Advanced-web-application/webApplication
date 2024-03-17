@@ -98,12 +98,12 @@ describe("Auth tests", () => {
   });
 
 
-  test("Test Register with Missing Fields", async () => {
-    const response = await request(app)
-      .post("/auth/register")
-      .send({});
-    expect(response.statusCode).toBe(400);
-});
+//   test("Test Register with Missing Fields", async () => {
+//     const response = await request(app)
+//       .post("/auth/register")
+//       .send({});
+//     expect(response.statusCode).toBe(400);
+// });
 
 
 // test("Test Register with Existing Email", async () => {

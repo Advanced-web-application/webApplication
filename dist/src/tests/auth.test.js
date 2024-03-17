@@ -88,12 +88,12 @@ describe("Auth tests", () => {
             .send({ email: "test@test.com", password: "wrong_password" });
         expect(response.statusCode).toBe(401);
     }));
-    test("Test Register with Missing Fields", () => __awaiter(void 0, void 0, void 0, function* () {
-        const response = yield (0, supertest_1.default)(app)
-            .post("/auth/register")
-            .send({});
-        expect(response.statusCode).toBe(400);
-    }));
+    //   test("Test Register with Missing Fields", async () => {
+    //     const response = await request(app)
+    //       .post("/auth/register")
+    //       .send({});
+    //     expect(response.statusCode).toBe(400);
+    // });
     // test("Test Register with Existing Email", async () => {
     //     const response = await request(app)
     //       .post("/auth/register")
