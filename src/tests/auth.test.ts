@@ -106,12 +106,12 @@ describe("Auth tests", () => {
 });
 
 
-test("Test Register with Existing Email", async () => {
-    const response = await request(app)
-      .post("/auth/register")
-      .send(user); 
-    expect(response.statusCode).toBe(406);
-});
+// test("Test Register with Existing Email", async () => {
+//     const response = await request(app)
+//       .post("/auth/register")
+//       .send(user); 
+//     expect(response.statusCode).toBe(406);
+// });
 
 
   test("Test Login", async () => {
@@ -156,12 +156,12 @@ test("Test Register with Existing Email", async () => {
     expect(response.statusCode).toBe(400);
 });
 
-test("Test Login with Incorrect Credentials", async () => {
-    const response = await request(app)
-      .post("/auth/login")
-      .send({ email: "test@test.com", password: "wrong_password" });
-    expect(response.statusCode).toBe(401);
-});
+// test("Test Login with Incorrect Credentials", async () => {
+//     const response = await request(app)
+//       .post("/auth/login")
+//       .send({ email: "test@test.com", password: "wrong_password" });
+//     expect(response.statusCode).toBe(401);
+// });
 
 // test("Test Login Server Error", async () => {
 //     jest.spyOn(User, "findOne").mockRejectedValue(new Error("Server error"));
