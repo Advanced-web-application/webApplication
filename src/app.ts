@@ -31,6 +31,9 @@ const initApp = (): Promise<Express> => {
       app.use("/restAPI", restAPIRoute);
       app.use("/file", fileRoute);
       app.use("/public", express.static("public"));
+      app.get('*', (_, res) => {
+        res.sendFile('client/index.html', { root: "public" });
+      })
       resolve(app);
     });
   });
