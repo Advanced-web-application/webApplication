@@ -137,6 +137,7 @@ router.post("/register", auth_controller_1.default.register);
 *           type: string
 *           description: The Google token
 *       example:
+//TODO♥♥: BRING A DYNAMIC CRADENTIALS SO I WILL WORK EVERYTIME
 *        'eyJhbGciOiJSUzI1NiIsImtpZCI6IjA4YmY1YzM3NzJkZDRlN2E3MjdhMTAxYmY1MjBmNjU3NWNhYzMyNmYiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI4OTU2MzQyNjcwMTEtY3YybzkxMHJuY2E5OTQyM3VkM2VuMGpzMHJhaWRmbGguYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI4OTU2MzQyNjcwMTEtY3YybzkxMHJuY2E5OTQyM3VkM2VuMGpzMHJhaWRmbGguYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMTgwNjA3Njg0ODYyMDg5MjMzMjgiLCJlbWFpbCI6Im1pY2hhbHN0dWRpZXMwQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYmYiOjE3MTA0MTA3MzksIm5hbWUiOiJtaWNoYWwgc3R1ZGllcyIsInBpY3R1cmUiOiJodHRwczovL2xoMy5nb29nbGV1c2VyY29udGVudC5jb20vYS9BQ2c4b2NKbUVpWVRLbDhVbTdxNXl1ZHQ1QUVwSmpjTEx3U3pub29OSVVSeWRQZlM9czk2LWMiLCJnaXZlbl9uYW1lIjoibWljaGFsIiwiZmFtaWx5X25hbWUiOiJzdHVkaWVzIiwibG9jYWxlIjoiZW4iLCJpYXQiOjE3MTA0MTEwMzksImV4cCI6MTcxMDQxNDYzOSwianRpIjoiOTY3MTFhNmYwYjJkZjE3M2E3N2NhM2M2ZjA5Y2I4MzcyM2JlMWY1NSJ9.WwgP0UOuTbWv_Xz6CbElD5oyM1J_8WKJXyJXh4VTtBksV_itiqK8JbVsJKgoqDPlU3DSDR5WSr4Xpjb_iPKIpeTqh1OXXpL1xFNc-Ht3TOyLRc3MO5oAe_qimObrB-naE1zNzZfoydcDV1XHZiJ39TmGQmbOwtTvRbn35k9gMLfPzm6XPFy6LL3yY1LXKXVOpKsiPbpWWJmZOizwUDkSHqPcwDXrEEMUrvG7T3dKL6mK5z0Xz7sEvdjsFv_VngCUDzsl4Wos09amIdfc9UC8D8ulPH5WjHstBl_TFh8B-9e7XNJImmaE3oDaL5sWmw64f1YOJnS50vQYDfvMPkJjPw'
 */
 /**
@@ -217,7 +218,7 @@ router.post("/google", auth_controller_1.default.googleSignin);
 *         content:
 *           application/json:
 *             schema:
-*               $ref: '#/components/schemas/User'
+*               $ref: '#/components/schemas/Tokens'
 *       400:
 *         description: Bad Request
 *         content:
@@ -246,18 +247,14 @@ router.post("/login", auth_controller_1.default.login);
 * @swagger
 * /auth/logout:
 *   get:
-*     summary: Logout a user
-*     tags: [Auth]
-*     parameters:
-*       - in: header
-*         name: security
-*         schema:
-*           type: string
-*         required: true
-*         description: Bearer token for authorization which is the refresh token
-*     responses:
-*       200:
-*         description: Successfully logged out
+*       summary: logout a user
+*       tags: [Auth]
+*       description: need to provide the refresh token in the auth header
+*       security:
+*         - bearerAuth: []
+*       responses:
+*         200:
+*           description: Successfully logged out
 *         content:
 *           application/json:
 *             schema:

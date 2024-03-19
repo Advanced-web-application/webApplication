@@ -254,18 +254,14 @@ router.post("/login", authController.login);
 * @swagger
 * /auth/logout:
 *   get:
-*     summary: Logout a user
-*     tags: [Auth]
-*     parameters:
-*       - in: header
-*         name: security
-*         schema:
-*           type: string
-*         required: true
-*         description: Bearer token for authorization which is the refresh token
-*     responses:
-*       200:
-*         description: Successfully logged out
+*       summary: logout a user
+*       tags: [Auth]
+*       description: need to provide the refresh token in the auth header
+*       security:
+*         - bearerAuth: []
+*       responses:
+*         200:
+*           description: Successfully logged out
 *         content:
 *           application/json:
 *             schema:
@@ -299,13 +295,6 @@ router.post("/login", authController.login);
 *     description: Need to provide the refresh token in the auth header
 *     security:
 *       - bearerAuth: []
-*     parameters:
-*       - in: header
-*         name: Authorization
-*         schema:
-*           type: string
-*         required: true
-*         description: Bearer token for authorization which is the refresh token
 *     responses:
 *       200:
 *         description: The access & refresh tokens
