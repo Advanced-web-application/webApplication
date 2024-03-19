@@ -141,47 +141,47 @@ router.post("/register", authController.register);
 */
 
 
-/**
-* @swagger
- * /auth/google:
- *   post:
- *     summary: Sign in with Google
- *     tags: [Auth]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               credential:
- *                 $ref: '#/components/schemas/Credential'
- *     responses:
- *       200:
- *         description: Successful sign in
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                  access token:
- *                   type: string
- *                  refresh token:
- *                   type: string
- *                 user:
- *                   type: object
- *       400:
- *         description: Bad Request
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message: 
- *                   type: string
- *               example:
- *                 message: "Bad Request"
- */
+// /**
+// * @swagger
+//  * /auth/google:
+//  *   post:
+//  *     summary: Sign in with Google
+//  *     tags: [Auth]
+//  *     requestBody:
+//  *       required: true
+//  *       content:
+//  *         application/json:
+//  *           schema:
+//  *             type: object
+//  *             properties:
+//  *               credential:
+//  *                 $ref: '#/components/schemas/Credential'
+//  *     responses:
+//  *       200:
+//  *         description: Successful sign in
+//  *         content:
+//  *           application/json:
+//  *             schema:
+//  *               type: object
+//  *               properties:
+//  *                  access token:
+//  *                   type: string
+//  *                  refresh token:
+//  *                   type: string
+//  *                 user:
+//  *                   type: object
+//  *       400:
+//  *         description: Bad Request
+//  *         content:
+//  *           application/json:
+//  *             schema:
+//  *               type: object
+//  *               properties:
+//  *                 message: 
+//  *                   type: string
+//  *               example:
+//  *                 message: "Bad Request"
+//  */
 router.post("/google", authController.googleSignin);
 
 /**
