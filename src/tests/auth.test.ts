@@ -229,15 +229,16 @@ describe("Auth tests", () => {
 
   test("Test double use of refresh token", async () => {
     const response = await request(app)
-      .get("/auth/refresh")
+      .get("/auth/refreshToken")
       .set("Authorization", "JWT " + refreshToken)
       .send();
-    expect(response.statusCode).not.toBe(200);
+      console.log("response.statusCode double use : " +response.statusCode);
+    expect(response.statusCode).toBe(401);
     console.log("new refresh token from double: " + response.statusCode);
 
     //verify that the new token is not valid as well
     const response1 = await request(app)
-      .get("/auth/refresh")
+      .get("/auth/refreshToken")
       .set("Authorization", "JWT " + newRefreshToken)
       .send();
     expect(response1.statusCode).not.toBe(200);

@@ -13,6 +13,8 @@ const post_route_1 = __importDefault(require("./routes/post_route"));
 const auth_route_1 = __importDefault(require("./routes/auth_route"));
 const restAPI_route_1 = __importDefault(require("./routes/restAPI_route"));
 const file_route_1 = __importDefault(require("./routes/file_route"));
+const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
+const swagger_jsdoc_1 = __importDefault(require("swagger-jsdoc"));
 const initApp = () => {
     const promise = new Promise((resolve) => {
         const db = mongoose_1.default.connection;
@@ -29,14 +31,29 @@ const initApp = () => {
                 res.header("Access-Control-Allow-Headers", "*");
                 next();
             });
+            const options = {
+                definition: {
+                    openapi: "3.0.0",
+                    info: {
+                        title: "Web Advanced Application development 2023 REST API",
+                        version: "1.0.1",
+                        description: "REST server including authentication using JWT and refresh token",
+                    },
+                    servers: [{ url: "https://node12.cs.colman.ac.il/", },],
+                },
+                apis: ["./src/routes/*.ts"],
+            };
+            const specs = (0, swagger_jsdoc_1.default)(options);
+            app.use("/api-docs", swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(specs));
             app.use("/user", user_route_1.default);
             app.use("/post", post_route_1.default);
             app.use("/auth", auth_route_1.default);
             app.use("/restAPI", restAPI_route_1.default);
             app.use("/file", file_route_1.default);
             app.use("/public", express_1.default.static("public"));
-            app.get('*', (_, res) => {
-                res.sendFile('client/index.html', { root: "public" });
+            app.use(express_1.default.static('dist/client'));
+            app.get('*', function (req, res) {
+                res.sendfile('dist/client/index.html');
             });
             resolve(app);
         });
