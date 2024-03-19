@@ -637,6 +637,7 @@ describe("Post tests", () => {
       .send({ comment: "test comment" });
     expect(response.statusCode).toBe(200);
     expect(response.body.comments[0]).toBe("test comment");
+    await request(app).delete(`/post/${postId}`).set("Authorization", "JWT " + accessToken);
   });
 
   test("Test addComment with invalid post ID", async () => {
