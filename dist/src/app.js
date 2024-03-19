@@ -11,6 +11,7 @@ const body_parser_1 = __importDefault(require("body-parser"));
 const user_route_1 = __importDefault(require("./routes/user_route"));
 const post_route_1 = __importDefault(require("./routes/post_route"));
 const auth_route_1 = __importDefault(require("./routes/auth_route"));
+//import credentialsRoute from "./routes/credentials_route";
 const restAPI_route_1 = __importDefault(require("./routes/restAPI_route"));
 const file_route_1 = __importDefault(require("./routes/file_route"));
 const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
@@ -50,6 +51,7 @@ const initApp = () => {
             app.use("/auth", auth_route_1.default);
             app.use("/restAPI", restAPI_route_1.default);
             app.use("/file", file_route_1.default);
+            //app.use(credentialsRoute)
             app.use("/public", express_1.default.static("public"));
             app.use(express_1.default.static('dist/client'));
             app.get('*', function (req, res) {
