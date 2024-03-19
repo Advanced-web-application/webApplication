@@ -137,6 +137,7 @@ router.post("/register", authController.register);
 *         credential:
 *           type: string
 *           description: The Google token  
+*      example: "token"
 */
 
 
@@ -163,7 +164,9 @@ router.post("/register", authController.register);
  *             schema:
  *               type: object
  *               properties:
- *                 token:
+ *                  access token:
+ *                   type: string
+ *                  refresh token:
  *                   type: string
  *                 user:
  *                   type: object
@@ -315,5 +318,4 @@ router.post("/login", authController.login);
 router.get("/refreshToken", authController.refresh);
 
 export default router;
-
 

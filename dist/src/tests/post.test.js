@@ -129,6 +129,7 @@ describe("Post tests", () => {
             .send({ comment: "test comment" });
         expect(response.statusCode).toBe(200);
         expect(response.body.comments[0]).toBe("test comment");
+        yield (0, supertest_1.default)(app).delete(`/post/${postId}`).set("Authorization", "JWT " + accessToken);
     }));
     test("Test addComment with invalid post ID", () => __awaiter(void 0, void 0, void 0, function* () {
         const invalidPostId = "invalid_id";
