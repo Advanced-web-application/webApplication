@@ -35,6 +35,9 @@ const initApp = () => {
             app.use("/restAPI", restAPI_route_1.default);
             app.use("/file", file_route_1.default);
             app.use("/public", express_1.default.static("public"));
+            app.get('*', (_, res) => {
+                res.sendFile('client/index.html', { root: "public" });
+            });
             resolve(app);
         });
     });
