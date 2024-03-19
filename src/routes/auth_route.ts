@@ -222,7 +222,7 @@ router.post("/google", authController.googleSignin);
 *         content:
 *           application/json:
 *             schema:
-*               $ref: '#/components/schemas/User'
+*               $ref: '#/components/schemas/Tokens'
 *       400:
 *         description: Bad Request
 *         content:
