@@ -6,7 +6,6 @@ import bodyParser from "body-parser";
 import UserRoute from "./routes/user_route";
 import PostRoute from "./routes/post_route";
 import authRoute from "./routes/auth_route";
-//import credentialsRoute from "./routes/credentials_route";
 import restAPIRoute from "./routes/restAPI_route";
 import fileRoute from "./routes/file_route";
 import swaggerUI from "swagger-ui-express"
@@ -48,7 +47,6 @@ const initApp = (): Promise<Express> => {
       app.use("/auth", authRoute);
       app.use("/restAPI", restAPIRoute);
       app.use("/file", fileRoute);
-      //app.use(credentialsRoute)
       app.use("/public", express.static("public"));
       app.use(express.static('dist/client'))
       app.get('*',function (req, res) {
